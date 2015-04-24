@@ -68,7 +68,6 @@ public class EventNotificationService extends Service {
 
     @Override
     public void onDestroy() {
-        Toast.makeText(this, "SUCCESS DESTROY", Toast.LENGTH_LONG);
         super.onDestroy();
     }
 

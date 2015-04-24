@@ -16,8 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -50,7 +48,7 @@ public class MainActivity extends ListActivity {
         UpdateHelpers.UpdateOutputFile(outputFile, templateFileDir, listOfEvents);
 
         //Update the indexes in output file
-        UpdateHelpers.UpdateIndexes(outputFile,  templateFileDir, listOfEvents);
+        UpdateHelpers.UpdateIndexes(outputFile, templateFileDir, listOfEvents);
 
         //Do something only on first app run.
         ListActivityHelpers.FirstAppRun(this, outputFile, templateFileDir, listOfEvents);
@@ -76,22 +74,16 @@ public class MainActivity extends ListActivity {
 
         Event eventToOpen = listOfEvents.get(position);
 
-        Class class1;
-        try {
-            class1 = Class.forName("lab.chabingba.telerikacademyschedule.SingleEventView");
-            Intent intent1 = new Intent(MainActivity.this, class1);
 
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("BundleEvent", eventToOpen);
-            bundle.putSerializable("List", listOfEvents);
+        Intent intent1 = new Intent(MainActivity.this, SingleEventViewActivity.class);
 
-            intent1.putExtras(bundle);
-            startActivity(intent1);
-            finish();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("BundleEvent", eventToOpen);
+        bundle.putSerializable("List", listOfEvents);
 
+        intent1.putExtras(bundle);
+        startActivity(intent1);
+        finish();
     }
 
     @Override
@@ -112,12 +104,8 @@ public class MainActivity extends ListActivity {
 
                 FileHelpers.AddDefaultEvents(listOfEvents, 1);
                 Data.SetListValues(listOfEvents);
-                Class nextClass;
 
-                try {
-                    nextClass = Class.forName("lab.chabingba.telerikacademyschedule.SingleEventEdit");
-
-                    Intent intentForAdd = new Intent(MainActivity.this, nextClass);
+                    Intent intentForAdd = new Intent(MainActivity.this, SingleEventEditActivity.class);
 
                     Bundle bundle = new Bundle();
 
@@ -129,9 +117,6 @@ public class MainActivity extends ListActivity {
 
                     startActivity(intentForAdd);
                     finish();
-                } catch (ClassNotFoundException e) {
-                    Log.e("CLASS", e.getMessage());
-                }
                 break;
             case R.id.addTenEvents:
 
@@ -141,6 +126,7 @@ public class MainActivity extends ListActivity {
                 finish();
                 break;
             case R.id.oldEvents:
+
                 Intent intentForOldEventsActivity = new Intent(MainActivity.this, OldEventsActivity.class);
 
                 startActivity(intentForOldEventsActivity);
@@ -170,10 +156,7 @@ public class MainActivity extends ListActivity {
             case R.id.editEvent:
                 Event eventToOpen = listOfEvents.get(id);
 
-                Class class1;
-                try {
-                    class1 = Class.forName("lab.chabingba.telerikacademyschedule.SingleEventEdit");
-                    Intent intent1 = new Intent(MainActivity.this, class1);
+                    Intent intent1 = new Intent(MainActivity.this, SingleEventEditActivity.class);
 
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("Event", eventToOpen);
@@ -182,9 +165,6 @@ public class MainActivity extends ListActivity {
                     intent1.putExtras(bundle);
                     startActivity(intent1);
                     finish();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
                 return true;
             case R.id.removeEvent:
                 for (int i = 0; i < Data.listOfEvents.size(); i++) {
