@@ -15,6 +15,10 @@
         android:title="Old events" />
 
     <item
+        android:id="@+id/removeOldEvents"
+        android:title="Remove old events" />
+
+    <item
         android:id="@+id/exit"
         android:title="Exit" />
 

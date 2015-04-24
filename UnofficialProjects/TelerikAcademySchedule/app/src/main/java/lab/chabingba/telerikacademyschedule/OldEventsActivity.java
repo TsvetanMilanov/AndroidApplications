@@ -33,7 +33,7 @@ public class OldEventsActivity extends ListActivity {
         super.onCreate(savedInstanceState);
 
         View view = this.getWindow().getDecorView();
-        view.setBackgroundColor(Color.rgb(85, 255, 40));
+        view.setBackgroundColor(Color.rgb(0, 130, 255));
 
         //Set the value of the Content variable to use from another classes.
         contextOfOldEventsActivity = this;
@@ -65,15 +65,15 @@ public class OldEventsActivity extends ListActivity {
 
         Event eventToOpen = listOfOldEvents.get(position);
 
-            Intent intent1 = new Intent(OldEventsActivity.this, SingleEventViewActivity.class);
+        Intent intent1 = new Intent(OldEventsActivity.this, SingleEventViewActivity.class);
 
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("BundleEvent", eventToOpen);
-            bundle.putSerializable("List", listOfOldEvents);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("BundleEvent", eventToOpen);
+        bundle.putSerializable("List", listOfOldEvents);
 
-            intent1.putExtras(bundle);
-            startActivity(intent1);
-            finish();
+        intent1.putExtras(bundle);
+        startActivity(intent1);
+        finish();
     }
 
     @Override
@@ -89,6 +89,14 @@ public class OldEventsActivity extends ListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+            case R.id.clearOldEvents:
+                Data.listOfOldEvents.clear();
+                outputFile.delete();
+                Intent refreshOldEventsActivityIntent = new Intent(OldEventsActivity.this, OldEventsActivity.class);
+
+                startActivity(refreshOldEventsActivityIntent);
+                finish();
+                break;
             case R.id.exit:
                 finish();
                 break;
@@ -113,15 +121,15 @@ public class OldEventsActivity extends ListActivity {
             case R.id.editEvent:
                 Event eventToOpen = listOfOldEvents.get(id);
 
-                    Intent intent1 = new Intent(OldEventsActivity.this, SingleEventEditActivity.class);
+                Intent intent1 = new Intent(OldEventsActivity.this, SingleEventEditActivity.class);
 
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("Event", eventToOpen);
-                    bundle.putSerializable("List", listOfOldEvents);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("Event", eventToOpen);
+                bundle.putSerializable("List", listOfOldEvents);
 
-                    intent1.putExtras(bundle);
-                    startActivity(intent1);
-                    finish();
+                intent1.putExtras(bundle);
+                startActivity(intent1);
+                finish();
                 return true;
             case R.id.removeEvent:
                 for (int i = 0; i < Data.listOfOldEvents.size(); i++) {

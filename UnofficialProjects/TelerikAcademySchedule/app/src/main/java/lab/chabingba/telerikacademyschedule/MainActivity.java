@@ -59,7 +59,7 @@ public class MainActivity extends ListActivity {
 
         FileHelpers.ReadEventsFromFile(listOfEvents, outputFile);
 
-        RemoveOldEvents();
+        //RemoveOldEvents();
 
         Data.SetListValues(listOfEvents);
 
@@ -80,7 +80,7 @@ public class MainActivity extends ListActivity {
         Calendar currentDate = Calendar.getInstance();
         Calendar eventDate;
 
-        while(true) {
+        while (true) {
             Event currentEvent = listOfEvents.get(0);
 
             eventDate = currentEvent.GetEventDateAsCalendarDate();
@@ -175,6 +175,13 @@ public class MainActivity extends ListActivity {
                 Intent intentForOldEventsActivity = new Intent(MainActivity.this, OldEventsActivity.class);
 
                 startActivity(intentForOldEventsActivity);
+                finish();
+                break;
+            case R.id.removeOldEvents:
+                RemoveOldEvents();
+                Intent refreshMainIntent = new Intent(MainActivity.this, MainActivity.class);
+
+                startActivity(refreshMainIntent);
                 finish();
                 break;
             case R.id.exit:
