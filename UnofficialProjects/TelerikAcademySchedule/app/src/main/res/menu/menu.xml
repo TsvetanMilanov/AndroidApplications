@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <item
+        android:id="@+id/addEvent"
+        android:title="Add event" />
+
+    <item
+        android:id="@+id/addTenEvents"
+        android:title="Add 10 events" />
+    <item
+        android:id="@+id/exit"
+        android:title="Exit" />
+
+</menu>

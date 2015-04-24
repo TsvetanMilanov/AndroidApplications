@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    android:id="@+id/scrollView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#55FF28"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="#55FF28"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="30dp"
+            android:paddingBottom="30dp"
+            android:paddingRight="30dp">
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Type: "
+                    android:textSize="27dp"
+                    android:paddingTop="50dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="#000000" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <EditText
+                    android:id="@+id/etName"
+                    android:paddingRight="30dp"
+                    android:layout_weight="1"
+                    android:ellipsize="none"
+                    android:maxLines="100"
+
+                    android:scrollHorizontally="false" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date: "
+                    android:paddingBottom="10dp"
+                    android:textSize="27dp"
+                    android:textColor="#000000" />
+            </TableRow>
+
+            <TableRow>
+
+                <EditText
+                    android:id="@+id/etDate"
+                    android:paddingRight="30dp"
+                    android:layout_weight="1"
+                    android:ellipsize="none"
+                    android:maxLines="100"
+                    android:scrollHorizontally="false" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/tvHour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hour: "
+                    android:textSize="27dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="#000000" />
+            </TableRow>
+
+            <TableRow>
+
+                <EditText
+                    android:id="@+id/etHour"
+                    android:paddingRight="30dp"
+                    android:layout_weight="1"
+                    android:ellipsize="none"
+                    android:maxLines="100"
+                    android:scrollHorizontally="false" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/tvDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Description: "
+                    android:textSize="27dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="#000000" />
+            </TableRow>
+
+            <TableRow>
+
+                <EditText
+                    android:id="@+id/etDescription"
+                    android:paddingRight="30dp"
+                    android:layout_weight="1"
+                    android:ellipsize="none"
+                    android:maxLines="100"
+                    android:scrollHorizontally="false" />
+
+            </TableRow>
+
+
+        </TableLayout>
+
+        <Button
+            android:id="@+id/buttonDone"
+            android:text="Done"
+            android:background="#ff00de1b"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:textSize="23dp"
+            android:textColor="#ffffff"
+            android:layout_gravity="center"
+            android:shadowDx="23" />
+
+    </LinearLayout>
+</ScrollView>
