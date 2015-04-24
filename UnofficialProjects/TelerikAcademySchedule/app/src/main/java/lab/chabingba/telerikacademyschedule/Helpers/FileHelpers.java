@@ -1,6 +1,5 @@
 package lab.chabingba.telerikacademyschedule.Helpers;
 
-import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
@@ -27,18 +26,19 @@ import lab.chabingba.telerikacademyschedule.Event;
 public final class FileHelpers {
 
     public static void WriteEventsToFile(File outputFile, File templateFileDir, ArrayList<Event> listOfEvents) {
-        try {
-            if (outputFile.exists()) {
-                WriteOutput(outputFile, listOfEvents);
-            } else {
-                CreateOutputFile(outputFile, templateFileDir);
-                WriteOutput(outputFile, listOfEvents);
+        if (listOfEvents.size() > 0)
+            try {
+                if (outputFile.exists()) {
+                    WriteOutput(outputFile, listOfEvents);
+                } else {
+                    CreateOutputFile(outputFile, templateFileDir);
+                    WriteOutput(outputFile, listOfEvents);
+                }
+            } catch (IllegalAccessException e) {
+                Log.e("I/O", e.getMessage());
+            } catch (IOException e) {
+                Log.e("I/O", e.getMessage());
             }
-        } catch (IllegalAccessException e) {
-            Log.e("I/O", e.getMessage());
-        } catch (IOException e) {
-            Log.e("I/O", e.getMessage());
-        }
     }
 
     public static void WriteOutput(File outputFile, ArrayList<Event> listOfEvents) throws IOException {
@@ -81,7 +81,8 @@ public final class FileHelpers {
             date.setTime(new Date());
             year = date.get(Calendar.YEAR);
             month = date.get(Calendar.MONTH);
-            day = date.get(Calendar.DAY_OF_MONTH);
+            // TODO: remove the -3
+            day = date.get(Calendar.DAY_OF_MONTH) - 3;
         } else {
             date = listOfEvents.get(listOfEvents.size() - 1).GetEventDateAsCalendarDate();
             year = date.get(Calendar.YEAR);
@@ -194,7 +195,7 @@ public final class FileHelpers {
         return false;
     }
 
-    public static void FirstInitList(File outputFile, File templateFileDir, ArrayList<Event> listOfEvents) {
+    public static void FirstInitList(File outputFile, ArrayList<Event> listOfEvents) {
 
             /*
             //Add days till the end of the month.
@@ -208,9 +209,7 @@ public final class FileHelpers {
         int daysToAdd = 5;
         FileHelpers.AddDefaultEvents(listOfEvents, daysToAdd);
 
-        FileHelpers.WriteEventsToFile(outputFile, templateFileDir, listOfEvents);
-
-        Data.SetListValues(listOfEvents);
+        FileHelpers.WriteEventsToFile(outputFile, Constants.TemplateFileDir, listOfEvents);
     }
 
     private static String MakeEventsString(ArrayList<Event> listOfEvents) {

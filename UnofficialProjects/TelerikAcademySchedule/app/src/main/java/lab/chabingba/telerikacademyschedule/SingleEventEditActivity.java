@@ -73,12 +73,7 @@ public class SingleEventEditActivity extends Activity {
                     throw new IllegalArgumentException("Field cannot be empty!");
                 }
 
-                Class nextClass;
-
-                try {
-                    nextClass = Class.forName("lab.chabingba.telerikacademyschedule.MainActivity");
-
-                    Intent intent = new Intent(SingleEventEditActivity.this, nextClass);
+                    Intent intent = new Intent(SingleEventEditActivity.this, MainActivity.class);
 
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("Event", editedEvent);
@@ -89,9 +84,6 @@ public class SingleEventEditActivity extends Activity {
                     Data.listOfEvents.remove(editedEvent.GetEventID() + 1);
                     startActivity(intent);
                     finish();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
             }
         });
     }

@@ -37,12 +37,8 @@ public class SingleEventViewActivity extends Activity {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Class nextClass;
 
-                try {
-                    nextClass = Class.forName("lab.chabingba.telerikacademyschedule.SingleEventEdit");
-
-                    Intent intent = new Intent(SingleEventViewActivity.this, nextClass);
+                    Intent intent = new Intent(SingleEventViewActivity.this, SingleEventEditActivity.class);
 
                     Bundle bundle = new Bundle();
 
@@ -54,9 +50,6 @@ public class SingleEventViewActivity extends Activity {
 
                     startActivity(intent);
                     finish();
-                } catch (ClassNotFoundException e) {
-                    Log.e("CLASS", e.getMessage());
-                }
             }
         });
 

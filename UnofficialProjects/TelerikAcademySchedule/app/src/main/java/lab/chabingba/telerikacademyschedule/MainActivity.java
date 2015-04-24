@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,8 +15,10 @@ import android.widget.ListView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 
+import lab.chabingba.telerikacademyschedule.Helpers.Constants;
 import lab.chabingba.telerikacademyschedule.Helpers.FileHelpers;
 import lab.chabingba.telerikacademyschedule.Helpers.ListActivityHelpers;
 import lab.chabingba.telerikacademyschedule.Helpers.UpdateHelpers;
@@ -26,8 +26,8 @@ import lab.chabingba.telerikacademyschedule.Helpers.UpdateHelpers;
 public class MainActivity extends ListActivity {
     public static MainActivity contextOfMainActivity;
     public ArrayList<Event> listOfEvents = Data.listOfEvents;
-    private File templateFileDir = new File(Environment.getExternalStorageDirectory() + "/TelerikScheduleAPP/");
-    private File outputFile = new File(templateFileDir, "output.txt");
+
+    private File outputFile = new File(Constants.TemplateFileDir, "output.txt");
 
     public static Context GetContext() {
         return contextOfMainActivity;
@@ -45,27 +45,72 @@ public class MainActivity extends ListActivity {
         /* Update the output.txt if an event was edited
         (on app start Data.listOfEvents is always empty, so only when adding event from edit to it it will have events in it.) */
 
-        UpdateHelpers.UpdateOutputFile(outputFile, templateFileDir, listOfEvents);
+        UpdateHelpers.UpdateOutputFile(outputFile, listOfEvents);
 
         //Update the indexes in output file
-        UpdateHelpers.UpdateIndexes(outputFile, templateFileDir, listOfEvents);
+        UpdateHelpers.UpdateIndexes(outputFile, listOfEvents);
+
+        Data.SetListValues(listOfEvents);
 
         //Do something only on first app run.
-        ListActivityHelpers.FirstAppRun(this, outputFile, templateFileDir, listOfEvents);
+        ListActivityHelpers.FirstAppRun(this, outputFile, listOfEvents);
+
+        Data.SetListValues(listOfEvents);
 
         FileHelpers.ReadEventsFromFile(listOfEvents, outputFile);
+
+        //RemoveOldEvents();
 
         Data.SetListValues(listOfEvents);
 
         Collections.sort(listOfEvents);
 
-        UpdateHelpers.UpdateIndexes(outputFile, templateFileDir, listOfEvents);
+        UpdateHelpers.UpdateIndexes(outputFile, listOfEvents);
+
+        Data.SetListValues(listOfEvents);
 
         /* Create string array with all event names and dates as string for list items. */
         String[] eventsThumbnails = ListActivityHelpers.CreateEventThumbnails(listOfEvents);
 
         setListAdapter(new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, eventsThumbnails));
         registerForContextMenu(this.getListView());
+    }
+
+    private void RemoveOldEvents() {
+        Calendar currentDate = Calendar.getInstance();
+        Calendar eventDate;
+
+        for (int i = 0; i < listOfEvents.size(); i++) {
+            Event currentEvent = listOfEvents.get(i);
+
+            eventDate = currentEvent.GetEventDateAsCalendarDate();
+
+            if (eventDate.get(Calendar.YEAR) > currentDate.get(Calendar.YEAR)) {
+                continue;
+            } else if (eventDate.get(Calendar.YEAR) == currentDate.get(Calendar.YEAR)) {
+                if (eventDate.get(Calendar.MONTH) > currentDate.get(Calendar.MONTH)) {
+                    continue;
+                } else if (eventDate.get(Calendar.MONTH) == currentDate.get(Calendar.MONTH)) {
+                    if (eventDate.get(Calendar.DAY_OF_MONTH) > currentDate.get(Calendar.DAY_OF_MONTH)) {
+                        continue;
+                    } else if (eventDate.get(Calendar.DAY_OF_MONTH) == currentDate.get(Calendar.DAY_OF_MONTH)) {
+                        continue;
+                    } else {
+                        Data.listOfOldEvents.add(currentEvent);
+                        listOfEvents.remove(currentEvent);
+                        Data.SetListValues(listOfEvents);
+                    }
+                } else {
+                    Data.listOfOldEvents.add(currentEvent);
+                    listOfEvents.remove(currentEvent);
+                    Data.SetListValues(listOfEvents);
+                }
+            } else {
+                Data.listOfOldEvents.add(currentEvent);
+                listOfEvents.remove(currentEvent);
+                Data.SetListValues(listOfEvents);
+            }
+        }
     }
 
     @Override
@@ -105,18 +150,18 @@ public class MainActivity extends ListActivity {
                 FileHelpers.AddDefaultEvents(listOfEvents, 1);
                 Data.SetListValues(listOfEvents);
 
-                    Intent intentForAdd = new Intent(MainActivity.this, SingleEventEditActivity.class);
+                Intent intentForAdd = new Intent(MainActivity.this, SingleEventEditActivity.class);
 
-                    Bundle bundle = new Bundle();
+                Bundle bundle = new Bundle();
 
-                    Event eventToPass = listOfEvents.get(listOfEvents.size() - 1);
+                Event eventToPass = listOfEvents.get(listOfEvents.size() - 1);
 
-                    bundle.putSerializable("Event", eventToPass);
+                bundle.putSerializable("Event", eventToPass);
 
-                    intentForAdd.putExtras(bundle);
+                intentForAdd.putExtras(bundle);
 
-                    startActivity(intentForAdd);
-                    finish();
+                startActivity(intentForAdd);
+                finish();
                 break;
             case R.id.addTenEvents:
 
@@ -156,15 +201,15 @@ public class MainActivity extends ListActivity {
             case R.id.editEvent:
                 Event eventToOpen = listOfEvents.get(id);
 
-                    Intent intent1 = new Intent(MainActivity.this, SingleEventEditActivity.class);
+                Intent intent1 = new Intent(MainActivity.this, SingleEventEditActivity.class);
 
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("Event", eventToOpen);
-                    bundle.putSerializable("List", listOfEvents);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("Event", eventToOpen);
+                bundle.putSerializable("List", listOfEvents);
 
-                    intent1.putExtras(bundle);
-                    startActivity(intent1);
-                    finish();
+                intent1.putExtras(bundle);
+                startActivity(intent1);
+                finish();
                 return true;
             case R.id.removeEvent:
                 for (int i = 0; i < Data.listOfEvents.size(); i++) {

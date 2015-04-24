@@ -20,7 +20,7 @@ import lab.chabingba.telerikacademyschedule.MainActivity;
  */
 public final class ListActivityHelpers {
 
-    public static void FirstAppRun(Context context, File outputFile, File templateFileDir, ArrayList<Event> listOfEvents) {
+    public static void FirstAppRun(Context context, File outputFile, ArrayList<Event> listOfEvents) {
         boolean isFirstAppRun;
         SharedPreferences sharedPreferences;
 
@@ -31,7 +31,7 @@ public final class ListActivityHelpers {
         if (!isFirstAppRun) {
 
         /* Create the list of events on the first app run. */
-            FileHelpers.FirstInitList(outputFile, templateFileDir, listOfEvents);
+            FileHelpers.FirstInitList(outputFile, listOfEvents);
 
             ListActivityHelpers.SetInitialDate();
 
