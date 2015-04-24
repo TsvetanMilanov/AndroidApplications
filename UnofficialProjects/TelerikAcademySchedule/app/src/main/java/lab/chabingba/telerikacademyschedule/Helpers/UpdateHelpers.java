@@ -12,7 +12,7 @@ import lab.chabingba.telerikacademyschedule.Event;
 
 public final class UpdateHelpers {
 
-    public static void UpdateOutputFile(File outputFile, FileOutputStream outputStream, OutputStreamWriter outputStreamWriter, File templateFileDir, ArrayList<Event> listOfEvents) {
+    public static void UpdateOutputFile(File outputFile, File templateFileDir, ArrayList<Event> listOfEvents) {
         if (Data.listOfEvents.size() > 0) {
             outputFile.delete();
 
@@ -22,11 +22,11 @@ public final class UpdateHelpers {
                 Log.e("FILE", e.getMessage());
             }
 
-            FileHelpers.WriteEventsToFile(outputFile, outputStream, outputStreamWriter, templateFileDir, listOfEvents);
+            FileHelpers.WriteEventsToFile(outputFile, templateFileDir, listOfEvents);
         }
     }
 
-    public static void UpdateIndexes(File outputFile, FileOutputStream outputStream, OutputStreamWriter outputStreamWriter, File templateFileDir, ArrayList<Event> listOfEvents) {
+    public static void UpdateIndexes(File outputFile, File templateFileDir, ArrayList<Event> listOfEvents) {
         for (int i = 0; i < listOfEvents.size(); i++) {
             listOfEvents.get(i).SetEventID(i);
         }
@@ -41,7 +41,7 @@ public final class UpdateHelpers {
             }
 
             Data.SetListValues(listOfEvents);
-            FileHelpers.WriteEventsToFile(outputFile, outputStream, outputStreamWriter, templateFileDir, listOfEvents);
+            FileHelpers.WriteEventsToFile(outputFile, templateFileDir, listOfEvents);
         }
     }
 }

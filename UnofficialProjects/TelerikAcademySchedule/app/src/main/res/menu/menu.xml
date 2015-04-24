@@ -11,6 +11,10 @@
         android:id="@+id/addTenEvents"
         android:title="Add 10 events" />
     <item
+        android:id="@+id/oldEvents"
+        android:title="Old events" />
+
+    <item
         android:id="@+id/exit"
         android:title="Exit" />
 

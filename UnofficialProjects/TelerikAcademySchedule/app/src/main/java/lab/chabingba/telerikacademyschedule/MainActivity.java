@@ -1,8 +1,6 @@
 package lab.chabingba.telerikacademyschedule;
 
-import android.app.AlarmManager;
 import android.app.ListActivity;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -20,24 +18,22 @@ import android.widget.ListView;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 
 import lab.chabingba.telerikacademyschedule.Helpers.FileHelpers;
-import lab.chabingba.telerikacademyschedule.Helpers.MainActivityHelpers;
+import lab.chabingba.telerikacademyschedule.Helpers.ListActivityHelpers;
 import lab.chabingba.telerikacademyschedule.Helpers.UpdateHelpers;
 
 public class MainActivity extends ListActivity {
-    public ArrayList<Event> listOfEvents = Data.listOfEvents;
     public static MainActivity contextOfMainActivity;
-
+    public ArrayList<Event> listOfEvents = Data.listOfEvents;
     private File templateFileDir = new File(Environment.getExternalStorageDirectory() + "/TelerikScheduleAPP/");
     private File outputFile = new File(templateFileDir, "output.txt");
-    private FileOutputStream outputStream;
-    private OutputStreamWriter outputStreamWriter;
+
+    public static Context GetContext() {
+        return contextOfMainActivity;
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,13 +47,13 @@ public class MainActivity extends ListActivity {
         /* Update the output.txt if an event was edited
         (on app start Data.listOfEvents is always empty, so only when adding event from edit to it it will have events in it.) */
 
-        UpdateHelpers.UpdateOutputFile(outputFile, outputStream, outputStreamWriter, templateFileDir, listOfEvents);
+        UpdateHelpers.UpdateOutputFile(outputFile, templateFileDir, listOfEvents);
 
         //Update the indexes in output file
-        UpdateHelpers.UpdateIndexes(outputFile, outputStream, outputStreamWriter, templateFileDir, listOfEvents);
+        UpdateHelpers.UpdateIndexes(outputFile,  templateFileDir, listOfEvents);
 
         //Do something only on first app run.
-        MainActivityHelpers.FirstAppRun(this, outputFile, outputStream, outputStreamWriter, templateFileDir, listOfEvents);
+        ListActivityHelpers.FirstAppRun(this, outputFile, templateFileDir, listOfEvents);
 
         FileHelpers.ReadEventsFromFile(listOfEvents, outputFile);
 
@@ -65,10 +61,10 @@ public class MainActivity extends ListActivity {
 
         Collections.sort(listOfEvents);
 
-        UpdateHelpers.UpdateIndexes(outputFile, outputStream, outputStreamWriter, templateFileDir, listOfEvents);
+        UpdateHelpers.UpdateIndexes(outputFile, templateFileDir, listOfEvents);
 
         /* Create string array with all event names and dates as string for list items. */
-        String[] eventsThumbnails = CreateEventThumbnails(listOfEvents);
+        String[] eventsThumbnails = ListActivityHelpers.CreateEventThumbnails(listOfEvents);
 
         setListAdapter(new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, eventsThumbnails));
         registerForContextMenu(this.getListView());
@@ -144,6 +140,12 @@ public class MainActivity extends ListActivity {
                 startActivity(intent);
                 finish();
                 break;
+            case R.id.oldEvents:
+                Intent intentForOldEventsActivity = new Intent(MainActivity.this, OldEventsActivity.class);
+
+                startActivity(intentForOldEventsActivity);
+                finish();
+                break;
             case R.id.exit:
                 finish();
                 break;
@@ -200,53 +202,5 @@ public class MainActivity extends ListActivity {
             default:
                 return super.onContextItemSelected(item);
         }
-    }
-
-    private String[] CreateEventThumbnails(ArrayList<Event> listOfEvents) {
-        String[] eventsNamesAndDates = new String[listOfEvents.size()];
-
-        for (int i = 0; i < listOfEvents.size(); i++) {
-            Event currentEvent = listOfEvents.get(i);
-
-            String currentDay = FindDayOfWeek(currentEvent.GetEventDateAsCalendarDate().get(Calendar.DAY_OF_WEEK));
-
-            eventsNamesAndDates[i] = currentEvent.GetEventName() + "\r\n" + currentEvent.GetEventDate() + "\r\n" + currentDay + "\r\n" + currentEvent.GetEventHour() + " h";
-        }
-
-        return eventsNamesAndDates;
-    }
-
-    private String FindDayOfWeek(int intDay) {
-        String result = null;
-
-        switch (intDay) {
-            case 1:
-                result = "Sunday";
-                return result;
-            case 2:
-                result = "Monday";
-                return result;
-            case 3:
-                result = "Tuesday";
-                return result;
-            case 4:
-                result = "Wednesday";
-                return result;
-            case 5:
-                result = "Thursday";
-                return result;
-            case 6:
-                result = "Friday";
-                return result;
-            case 7:
-                result = "Saturday";
-                return result;
-        }
-
-        return result;
-    }
-
-    public static Context GetContext(){
-        return contextOfMainActivity;
     }
 }

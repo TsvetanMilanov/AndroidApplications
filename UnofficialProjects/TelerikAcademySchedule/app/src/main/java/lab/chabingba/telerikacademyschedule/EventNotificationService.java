@@ -39,7 +39,7 @@ public class EventNotificationService extends Service {
         if (hasEvent) {
             Log.i("EVENT", "Has notification");
 
-            Intent intentForEdit = new Intent(EventNotificationService.this, SingleEventView.class);
+            Intent intentForEdit = new Intent(EventNotificationService.this, SingleEventViewActivity.class);
 
             Bundle bundle = new Bundle();
             bundle.putSerializable("BundleEvent", this.event);
@@ -52,21 +52,14 @@ public class EventNotificationService extends Service {
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
             Notification notification = new Notification(R.drawable.icon, "Telerik Academy Event!", System.currentTimeMillis());
-            //notification.contentIntent(pendingIntent);
-                    /*notification.setContentTitle("Telerik Academy Event!!!");
-                    notification.setContentText(event.GetEventName() + " " + event.GetEventHour());
-                    notification.setAutoCancel(false);
-                    notification.setSmallIcon(R.drawable.icon);
-                    notification.setWhen(System.currentTimeMillis());
-                    notification.setTicker("Telerik Academy Event!");
-                    notification.setContentIntent(pendingIntent);
-                    notification.build();
-
-            notificationManager.notify(1, notification);*/
 
             notification.setLatestEventInfo(this, "Telerik Academy Event!!!", this.event.GetEventName() + " " + this.event.GetEventHour(), pendingIntent);
 
+            /*
+            //Uncomment for auto cancel the notification.
             notification.flags = notification.flags | notification.FLAG_AUTO_CANCEL;
+            */
+
             notificationManager.notify(1, notification);
         }
 

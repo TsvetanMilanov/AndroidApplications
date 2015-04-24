@@ -26,13 +26,13 @@ import lab.chabingba.telerikacademyschedule.Event;
  */
 public final class FileHelpers {
 
-    public static void WriteEventsToFile(File outputFile, FileOutputStream outputStream, OutputStreamWriter outputStreamWriter, File templateFileDir, ArrayList<Event> listOfEvents) {
+    public static void WriteEventsToFile(File outputFile, File templateFileDir, ArrayList<Event> listOfEvents) {
         try {
             if (outputFile.exists()) {
-                WriteOutput(outputFile, outputStream, outputStreamWriter, listOfEvents);
+                WriteOutput(outputFile, listOfEvents);
             } else {
                 CreateOutputFile(outputFile, templateFileDir);
-                WriteOutput(outputFile, outputStream, outputStreamWriter, listOfEvents);
+                WriteOutput(outputFile, listOfEvents);
             }
         } catch (IllegalAccessException e) {
             Log.e("I/O", e.getMessage());
@@ -41,7 +41,10 @@ public final class FileHelpers {
         }
     }
 
-    public static void WriteOutput(File outputFile, FileOutputStream outputStream, OutputStreamWriter outputStreamWriter, ArrayList<Event> listOfEvents) throws IOException {
+    public static void WriteOutput(File outputFile, ArrayList<Event> listOfEvents) throws IOException {
+        FileOutputStream outputStream;
+        OutputStreamWriter outputStreamWriter;
+
         outputStream = new FileOutputStream(outputFile);
         outputStreamWriter = new OutputStreamWriter(outputStream);
 
@@ -191,7 +194,7 @@ public final class FileHelpers {
         return false;
     }
 
-    public static void FirstInitList(Context context, File outputFile, FileOutputStream outputStream, OutputStreamWriter outputStreamWriter, File templateFileDir, ArrayList<Event> listOfEvents) {
+    public static void FirstInitList(File outputFile, File templateFileDir, ArrayList<Event> listOfEvents) {
 
             /*
             //Add days till the end of the month.
@@ -205,7 +208,7 @@ public final class FileHelpers {
         int daysToAdd = 5;
         FileHelpers.AddDefaultEvents(listOfEvents, daysToAdd);
 
-        FileHelpers.WriteEventsToFile(outputFile, outputStream, outputStreamWriter, templateFileDir, listOfEvents);
+        FileHelpers.WriteEventsToFile(outputFile, templateFileDir, listOfEvents);
 
         Data.SetListValues(listOfEvents);
     }
