@@ -45,6 +45,7 @@ public class MainActivity extends ListActivity {
         View view = this.getWindow().getDecorView();
         view.setBackgroundColor(Color.rgb(85, 255, 40));
 
+        //Set the value of the Content variable to use from another classes.
         contextOfMainActivity = this;
 
         /* Update the output.txt if an event was edited
@@ -52,8 +53,10 @@ public class MainActivity extends ListActivity {
 
         UpdateHelpers.UpdateOutputFile(outputFile, outputStream, outputStreamWriter, templateFileDir, listOfEvents);
 
+        //Update the indexes in output file
         UpdateHelpers.UpdateIndexes(outputFile, outputStream, outputStreamWriter, templateFileDir, listOfEvents);
 
+        //Do something only on first app run.
         MainActivityHelpers.FirstAppRun(this, outputFile, outputStream, outputStreamWriter, templateFileDir, listOfEvents);
 
         FileHelpers.ReadEventsFromFile(listOfEvents, outputFile);
@@ -239,22 +242,6 @@ public class MainActivity extends ListActivity {
                 result = "Saturday";
                 return result;
         }
-
-        return result;
-    }
-
-    private int GetDaysTillEndOfMonth(Calendar fromDate) {
-        Calendar date = fromDate;
-
-        int currentDays = date.get(Calendar.DAY_OF_MONTH);
-        int currentMonth = date.get(Calendar.MONTH);
-        int currentYear = date.get(Calendar.YEAR);
-
-        int maxDays = date.getActualMaximum(Calendar.DAY_OF_MONTH);
-
-        int result;
-
-        result = maxDays - currentDays + 1;
 
         return result;
     }

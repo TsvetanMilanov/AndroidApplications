@@ -17,11 +17,11 @@ public class Event implements Serializable, Comparable {
     }
 
     public Event(int eventID, String eventName, Calendar eventDate, String eventHour, String eventDescription) {
+        this();
         this.SetEventName(eventName);
         this.SetEventDate(eventDate);
         this.SetEventHour(eventHour);
         this.SetEventDescription(eventDescription);
-        this.isFinished = false;
         this.SetEventID(eventID);
     }
 

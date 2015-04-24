@@ -66,4 +66,20 @@ public final class MainActivityHelpers {
         Data.calendar = Calendar.getInstance();
         Data.calendar.add(Calendar.SECOND, 3);
     }
+
+    private int GetDaysTillEndOfMonth(Calendar fromDate) {
+        Calendar date = fromDate;
+
+        int currentDays = date.get(Calendar.DAY_OF_MONTH);
+        int currentMonth = date.get(Calendar.MONTH);
+        int currentYear = date.get(Calendar.YEAR);
+
+        int maxDays = date.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        int result;
+
+        result = maxDays - currentDays + 1;
+
+        return result;
+    }
 }
