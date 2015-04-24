@@ -59,7 +59,7 @@ public class MainActivity extends ListActivity {
 
         FileHelpers.ReadEventsFromFile(listOfEvents, outputFile);
 
-        //RemoveOldEvents();
+        RemoveOldEvents();
 
         Data.SetListValues(listOfEvents);
 
@@ -80,21 +80,21 @@ public class MainActivity extends ListActivity {
         Calendar currentDate = Calendar.getInstance();
         Calendar eventDate;
 
-        for (int i = 0; i < listOfEvents.size(); i++) {
-            Event currentEvent = listOfEvents.get(i);
+        while(true) {
+            Event currentEvent = listOfEvents.get(0);
 
             eventDate = currentEvent.GetEventDateAsCalendarDate();
 
             if (eventDate.get(Calendar.YEAR) > currentDate.get(Calendar.YEAR)) {
-                continue;
+                break;
             } else if (eventDate.get(Calendar.YEAR) == currentDate.get(Calendar.YEAR)) {
                 if (eventDate.get(Calendar.MONTH) > currentDate.get(Calendar.MONTH)) {
-                    continue;
+                    break;
                 } else if (eventDate.get(Calendar.MONTH) == currentDate.get(Calendar.MONTH)) {
                     if (eventDate.get(Calendar.DAY_OF_MONTH) > currentDate.get(Calendar.DAY_OF_MONTH)) {
-                        continue;
+                        break;
                     } else if (eventDate.get(Calendar.DAY_OF_MONTH) == currentDate.get(Calendar.DAY_OF_MONTH)) {
-                        continue;
+                        break;
                     } else {
                         Data.listOfOldEvents.add(currentEvent);
                         listOfEvents.remove(currentEvent);
