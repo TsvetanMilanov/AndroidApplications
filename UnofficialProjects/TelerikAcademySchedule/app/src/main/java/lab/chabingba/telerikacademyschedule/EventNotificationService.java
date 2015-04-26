@@ -5,10 +5,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -55,6 +55,9 @@ public class EventNotificationService extends Service {
 
             notification.setLatestEventInfo(this, "Telerik Academy Event!!!", this.event.GetEventName() + " " + this.event.GetEventHour(), pendingIntent);
 
+            notification.icon = R.drawable.icon;
+
+            notification.sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             /*
             //Uncomment for auto cancel the notification.
             notification.flags = notification.flags | notification.FLAG_AUTO_CANCEL;

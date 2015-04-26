@@ -135,7 +135,8 @@
             android:textSize="23dp"
             android:textColor="#ffffff"
             android:layout_gravity="center"
-            android:shadowDx="23" />
+            android:shadowDx="23"
+            android:layout_marginBottom="20px" />
 
     </LinearLayout>
 </ScrollView>

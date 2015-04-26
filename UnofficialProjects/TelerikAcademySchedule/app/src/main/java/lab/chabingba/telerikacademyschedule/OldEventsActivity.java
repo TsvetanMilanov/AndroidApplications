@@ -53,7 +53,11 @@ public class OldEventsActivity extends ListActivity {
         UpdateHelpers.UpdateIndexes(outputFile, listOfOldEvents);
 
         /* Create string array with all event names and dates as string for list items. */
-        String[] eventsThumbnails = ListActivityHelpers.CreateEventThumbnails(listOfOldEvents);
+
+        ArrayList<Event> reversedListOfOldEvents = listOfOldEvents;
+        Collections.reverse(reversedListOfOldEvents);
+
+        String[] eventsThumbnails = ListActivityHelpers.CreateEventThumbnails(reversedListOfOldEvents);
 
         setListAdapter(new ArrayAdapter<String>(OldEventsActivity.this, android.R.layout.simple_list_item_1, eventsThumbnails));
         registerForContextMenu(this.getListView());
