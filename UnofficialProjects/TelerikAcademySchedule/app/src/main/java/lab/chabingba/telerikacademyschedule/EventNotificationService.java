@@ -43,7 +43,7 @@ public class EventNotificationService extends Service {
 
             Bundle bundle = new Bundle();
             bundle.putSerializable("BundleEvent", this.event);
-            bundle.putSerializable("List", Data.listOfEvents);
+            bundle.putSerializable("List", Data.GetListOfEvents());
 
             intentForEdit.putExtras(bundle);
 
@@ -80,13 +80,13 @@ public class EventNotificationService extends Service {
 
         Calendar dateOfEvent;
 
-        for (int i = 0; i < Data.listOfEvents.size(); i++) {
-            dateOfEvent = Data.listOfEvents.get(i).GetEventDateAsCalendarDate();
+        for (int i = 0; i < Data.GetListOfEvents().size(); i++) {
+            dateOfEvent = Data.GetListOfEvents().get(i).GetEventDateAsCalendarDate();
 
             if (dateOfEvent.get(Calendar.YEAR) == currentDate.get(Calendar.YEAR)
                     && dateOfEvent.get(Calendar.MONTH) == currentDate.get(Calendar.MONTH)
                     && dateOfEvent.get(Calendar.DAY_OF_MONTH) == currentDate.get(Calendar.DAY_OF_MONTH)) {
-                this.event = Data.listOfEvents.get(i);
+                this.event = Data.GetListOfEvents().get(i);
                 Log.i("EVENTCHECK", "Found event for today.");
                 return true;
             }

@@ -5,13 +5,33 @@ import java.util.Calendar;
 
 public final class Data {
 
-    public static Calendar calendar;
+    private static Calendar calendar;
 
-    public static ArrayList<Event> listOfEvents = new ArrayList<>();
+    private static ArrayList<Event> listOfEvents = new ArrayList<>();
 
-    public static ArrayList<Event> listOfOldEvents = new ArrayList<>();
+    private static ArrayList<Event> listOfOldEvents = new ArrayList<>();
 
-    public static void SetListValues(ArrayList<Event> events) {
+    public static ArrayList<Event> GetListOfEvents() {
+        return Data.listOfEvents;
+    }
+
+    public static void SetListValuesOfEvents(ArrayList<Event> events) {
         Data.listOfEvents = events;
+    }
+
+    public static ArrayList<Event> GetListOfOldEvents() {
+        return Data.listOfOldEvents;
+    }
+
+    public static void SetListValuesOfOldEvents(ArrayList<Event> events) {
+        Data.listOfOldEvents = events;
+    }
+
+    public static Calendar GetCalendar() {
+        return Data.GetCalendar();
+    }
+
+    public static void SetCalendar(Calendar value) {
+        Data.calendar = value;
     }
 }

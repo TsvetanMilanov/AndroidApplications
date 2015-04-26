@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,7 +27,7 @@ import lab.chabingba.telerikacademyschedule.Helpers.UpdateHelpers;
  */
 public class OldEventsActivity extends ListActivity {
     public static OldEventsActivity contextOfOldEventsActivity;
-    public ArrayList<Event> listOfOldEvents = Data.listOfOldEvents;
+    public ArrayList<Event> listOfOldEvents = Data.GetListOfOldEvents();
     private File outputFile = new File(Constants.TemplateFileDir, "OldEvents.txt");
 
     public void onCreate(Bundle savedInstanceState) {
@@ -94,8 +95,14 @@ public class OldEventsActivity extends ListActivity {
 
         switch (item.getItemId()) {
             case R.id.clearOldEvents:
-                Data.listOfOldEvents.clear();
-                outputFile.delete();
+                Data.GetListOfOldEvents().clear();
+                boolean fileIsDeleted = outputFile.delete();
+
+                if (!fileIsDeleted){
+                    Log.e("FILE", "The outputFile in OldEventsActivity is not deleted.");
+                }
+
+
                 Intent refreshOldEventsActivityIntent = new Intent(OldEventsActivity.this, OldEventsActivity.class);
 
                 startActivity(refreshOldEventsActivityIntent);
@@ -136,11 +143,11 @@ public class OldEventsActivity extends ListActivity {
                 finish();
                 return true;
             case R.id.removeEvent:
-                for (int i = 0; i < Data.listOfOldEvents.size(); i++) {
-                    Event currentEvent = Data.listOfOldEvents.get(i);
+                for (int i = 0; i < Data.GetListOfOldEvents().size(); i++) {
+                    Event currentEvent = Data.GetListOfOldEvents().get(i);
 
                     if (currentEvent.GetEventID() == listOfOldEvents.get(id).GetEventID()) {
-                        Data.listOfOldEvents.remove(i);
+                        Data.GetListOfOldEvents().remove(i);
                         break;
                     }
                 }

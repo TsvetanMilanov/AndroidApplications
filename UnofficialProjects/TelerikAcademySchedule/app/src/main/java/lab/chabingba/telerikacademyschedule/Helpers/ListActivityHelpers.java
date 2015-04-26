@@ -68,6 +68,9 @@ public final class ListActivityHelpers {
             case 7:
                 result = "Saturday";
                 return result;
+            default:
+                result = "No day :D";
+                break;
         }
 
         return result;
@@ -96,17 +99,17 @@ public final class ListActivityHelpers {
         AlarmManager alarmManager = (AlarmManager) MainActivity.GetContext().getSystemService(Context.ALARM_SERVICE);
 
         //Set the notification time.
-        Data.calendar.set(Calendar.HOUR, 10);
-        Data.calendar.set(Calendar.MINUTE, 0);
-        Data.calendar.set(Calendar.SECOND, 0);
-        Data.calendar.set(Calendar.AM_PM, Calendar.AM);
+        Data.GetCalendar().set(Calendar.HOUR, 10);
+        Data.GetCalendar().set(Calendar.MINUTE, 0);
+        Data.GetCalendar().set(Calendar.SECOND, 0);
+        Data.GetCalendar().set(Calendar.AM_PM, Calendar.AM);
 
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Data.calendar.getTimeInMillis(), 1000 * 60 * 60 * 24, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Data.GetCalendar().getTimeInMillis(), 1000 * 60 * 60 * 24, pendingIntent);
     }
 
     private static void SetInitialDate() {
-        Data.calendar = Calendar.getInstance();
-        Data.calendar.add(Calendar.SECOND, 3);
+        Data.SetCalendar(Calendar.getInstance());
+        Data.GetCalendar().add(Calendar.SECOND, 3);
     }
 
     public int GetDaysTillEndOfMonth(Calendar fromDate) {

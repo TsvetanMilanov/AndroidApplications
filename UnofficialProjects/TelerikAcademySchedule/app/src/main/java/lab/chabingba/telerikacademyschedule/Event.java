@@ -5,7 +5,7 @@ import java.util.Calendar;
 
 public class Event implements Serializable, Comparable {
 
-    public boolean isFinished;
+    private boolean isFinished;
     private int eventID;
     private String eventName;
     private Calendar eventDate;
@@ -90,6 +90,14 @@ public class Event implements Serializable, Comparable {
         result.append("\r\n");
 
         return result.toString().trim();
+    }
+
+    public boolean GetIsFinished() {
+        return this.isFinished;
+    }
+
+    public void SetIsFinished(boolean value) {
+        this.isFinished = value;
     }
 
     @Override

@@ -5,7 +5,6 @@ import android.util.Log;
 import java.io.File;
 import java.util.ArrayList;
 
-import lab.chabingba.telerikacademyschedule.Data;
 import lab.chabingba.telerikacademyschedule.Event;
 
 public final class UpdateHelpers {

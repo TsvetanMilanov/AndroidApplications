@@ -25,7 +25,7 @@ import lab.chabingba.telerikacademyschedule.Helpers.UpdateHelpers;
 
 public class MainActivity extends ListActivity {
     public static MainActivity contextOfMainActivity;
-    public ArrayList<Event> listOfEvents = Data.listOfEvents;
+    public ArrayList<Event> listOfEvents = Data.GetListOfEvents();
 
     private File outputFile = new File(Constants.TemplateFileDir, "output.txt");
 
@@ -50,29 +50,29 @@ public class MainActivity extends ListActivity {
         //Update the indexes in output file
         UpdateHelpers.UpdateIndexes(outputFile, listOfEvents);
 
-        Data.SetListValues(listOfEvents);
+        Data.SetListValuesOfEvents(listOfEvents);
 
         //Do something only on first app run.
         ListActivityHelpers.FirstAppRun(this, outputFile, listOfEvents);
 
-        Data.SetListValues(listOfEvents);
+        Data.SetListValuesOfEvents(listOfEvents);
 
         FileHelpers.ReadEventsFromFile(listOfEvents, outputFile);
 
         //RemoveOldEvents();
 
-        Data.SetListValues(listOfEvents);
+        Data.SetListValuesOfEvents(listOfEvents);
 
         Collections.sort(listOfEvents);
 
         UpdateHelpers.UpdateIndexes(outputFile, listOfEvents);
 
-        Data.SetListValues(listOfEvents);
+        Data.SetListValuesOfEvents(listOfEvents);
 
         /* Create string array with all event names and dates as string for list items. */
         String[] eventsThumbnails = ListActivityHelpers.CreateEventThumbnails(listOfEvents);
 
-        setListAdapter(new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, eventsThumbnails));
+        setListAdapter(new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, eventsThumbnails));
         registerForContextMenu(this.getListView());
     }
 
@@ -96,19 +96,19 @@ public class MainActivity extends ListActivity {
                     } else if (eventDate.get(Calendar.DAY_OF_MONTH) == currentDate.get(Calendar.DAY_OF_MONTH)) {
                         break;
                     } else {
-                        Data.listOfOldEvents.add(currentEvent);
+                        Data.GetListOfOldEvents().add(currentEvent);
                         listOfEvents.remove(currentEvent);
-                        Data.SetListValues(listOfEvents);
+                        Data.SetListValuesOfEvents(listOfEvents);
                     }
                 } else {
-                    Data.listOfOldEvents.add(currentEvent);
+                    Data.GetListOfOldEvents().add(currentEvent);
                     listOfEvents.remove(currentEvent);
-                    Data.SetListValues(listOfEvents);
+                    Data.SetListValuesOfEvents(listOfEvents);
                 }
             } else {
-                Data.listOfOldEvents.add(currentEvent);
+                Data.GetListOfOldEvents().add(currentEvent);
                 listOfEvents.remove(currentEvent);
-                Data.SetListValues(listOfEvents);
+                Data.SetListValuesOfEvents(listOfEvents);
             }
         }
     }
@@ -148,7 +148,7 @@ public class MainActivity extends ListActivity {
             case R.id.addEvent:
 
                 FileHelpers.AddDefaultEvents(listOfEvents, 1);
-                Data.SetListValues(listOfEvents);
+                Data.SetListValuesOfEvents(listOfEvents);
 
                 Intent intentForAdd = new Intent(MainActivity.this, SingleEventEditActivity.class);
 
@@ -219,11 +219,11 @@ public class MainActivity extends ListActivity {
                 finish();
                 return true;
             case R.id.removeEvent:
-                for (int i = 0; i < Data.listOfEvents.size(); i++) {
-                    Event currentEvent = Data.listOfEvents.get(i);
+                for (int i = 0; i < Data.GetListOfEvents().size(); i++) {
+                    Event currentEvent = Data.GetListOfEvents().get(i);
 
                     if (currentEvent.GetEventID() == listOfEvents.get(id).GetEventID()) {
-                        Data.listOfEvents.remove(i);
+                        Data.GetListOfEvents().remove(i);
                         break;
                     }
                 }

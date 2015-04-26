@@ -80,8 +80,8 @@ public class SingleEventEditActivity extends Activity {
 
                     intent.putExtras(bundle);
 
-                    Data.listOfEvents.add(editedEvent.GetEventID(), editedEvent);
-                    Data.listOfEvents.remove(editedEvent.GetEventID() + 1);
+                    Data.GetListOfEvents().add(editedEvent.GetEventID(), editedEvent);
+                    Data.GetListOfEvents().remove(editedEvent.GetEventID() + 1);
                     startActivity(intent);
                     finish();
             }

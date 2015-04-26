@@ -3,7 +3,6 @@ package lab.chabingba.telerikacademyschedule;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,7 +13,9 @@ public class SingleEventViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_event_view);
 
-        final Event event = (Event) getIntent().getSerializableExtra("BundleEvent");
+        final Event event;
+
+        event = (Event) getIntent().getSerializableExtra("BundleEvent");
 
         TextView textViewName = (TextView) findViewById(R.id.tvName);
 
@@ -38,18 +39,16 @@ public class SingleEventViewActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                    Intent intent = new Intent(SingleEventViewActivity.this, SingleEventEditActivity.class);
+                Intent intent = new Intent(SingleEventViewActivity.this, SingleEventEditActivity.class);
 
-                    Bundle bundle = new Bundle();
+                Bundle bundle = new Bundle();
 
-                    Event eventToPass = event;
+                bundle.putSerializable("Event", event);
 
-                    bundle.putSerializable("Event", eventToPass);
+                intent.putExtras(bundle);
 
-                    intent.putExtras(bundle);
-
-                    startActivity(intent);
-                    finish();
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -58,11 +57,11 @@ public class SingleEventViewActivity extends Activity {
         removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i = 0; i < Data.listOfEvents.size(); i++) {
-                    Event currentEvent = Data.listOfEvents.get(i);
+                for (int i = 0; i < Data.GetListOfEvents().size(); i++) {
+                    Event currentEvent = Data.GetListOfEvents().get(i);
 
                     if (currentEvent.GetEventID() == event.GetEventID()) {
-                        Data.listOfEvents.remove(i);
+                        Data.GetListOfEvents().remove(i);
                         break;
                     }
                 }
