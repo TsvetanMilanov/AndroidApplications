@@ -55,6 +55,8 @@ public class MainActivity extends ListActivity {
         //Do something only on first app run.
         ListActivityHelpers.FirstAppRun(this, outputFile, listOfEvents);
 
+        ListActivityHelpers.SetInitialDate();
+
         Data.SetListValuesOfEvents(listOfEvents);
 
         FileHelpers.ReadEventsFromFile(listOfEvents, outputFile);

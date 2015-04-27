@@ -80,8 +80,7 @@ public final class FileHelpers {
             date.setTime(new Date());
             year = date.get(Calendar.YEAR);
             month = date.get(Calendar.MONTH);
-            // TODO: remove the -3
-            day = date.get(Calendar.DAY_OF_MONTH) - 3;
+            day = date.get(Calendar.DAY_OF_MONTH);
         } else {
             date = listOfEvents.get(listOfEvents.size() - 1).GetEventDateAsCalendarDate();
             year = date.get(Calendar.YEAR);

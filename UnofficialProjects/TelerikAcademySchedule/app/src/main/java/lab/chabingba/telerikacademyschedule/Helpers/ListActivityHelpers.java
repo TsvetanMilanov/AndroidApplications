@@ -33,8 +33,6 @@ public final class ListActivityHelpers {
         /* Create the list of events on the first app run. */
             FileHelpers.FirstInitList(outputFile, listOfEvents);
 
-            ListActivityHelpers.SetInitialDate();
-
             ListActivityHelpers.AlarmForPendingEvent();
 
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -107,7 +105,7 @@ public final class ListActivityHelpers {
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Data.GetCalendar().getTimeInMillis(), 1000 * 60 * 60 * 24, pendingIntent);
     }
 
-    private static void SetInitialDate() {
+    public static void SetInitialDate() {
         Data.SetCalendar(Calendar.getInstance());
         Data.GetCalendar().add(Calendar.SECOND, 3);
     }
