@@ -5,13 +5,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import lab.chabingba.telerikacademyschedule.Helpers.Constants;
+
+import static lab.chabingba.telerikacademyschedule.Helpers.Constants.EventType.values;
 
 /**
  * Created by Tsvetan on 2015-04-13.
@@ -28,7 +35,29 @@ public class SingleEventEditActivity extends Activity {
 
         final EditText etName = (EditText) findViewById(R.id.etName);
 
-        etName.setText(event.GetEventName());
+        etName.setVisibility(View.INVISIBLE);
+
+        final Spinner spinnerType = (Spinner) findViewById(R.id.spinnerType);
+
+        Constants.EventType[] allEventTypes = values();
+
+        final String[] spinnerTypeItems = CreateOptionsForType(allEventTypes);
+
+        ArrayAdapter<String> adapterForEventType = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, spinnerTypeItems);
+
+        spinnerType.setAdapter(adapterForEventType);
+
+        spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                etName.setText(spinnerTypeItems[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                etName.setText(spinnerTypeItems[0]);
+            }
+        });
 
         TextView textViewDate = (TextView) findViewById(R.id.tvDate);
 
@@ -73,19 +102,53 @@ public class SingleEventEditActivity extends Activity {
                     throw new IllegalArgumentException("Field cannot be empty!");
                 }
 
-                    Intent intent = new Intent(SingleEventEditActivity.this, MainActivity.class);
+                Intent intent = new Intent(SingleEventEditActivity.this, MainActivity.class);
 
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("Event", editedEvent);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("Event", editedEvent);
 
-                    intent.putExtras(bundle);
+                intent.putExtras(bundle);
 
-                    Data.GetListOfEvents().add(editedEvent.GetEventID(), editedEvent);
-                    Data.GetListOfEvents().remove(editedEvent.GetEventID() + 1);
-                    startActivity(intent);
-                    finish();
+                Data.GetListOfEvents().add(editedEvent.GetEventID(), editedEvent);
+                Data.GetListOfEvents().remove(editedEvent.GetEventID() + 1);
+                startActivity(intent);
+                finish();
             }
         });
+    }
+
+    private String[] CreateOptionsForType(Constants.EventType[] allEventTypes) {
+        String[] result = new String[allEventTypes.length];
+
+        for (int i = 0; i < result.length; i++) {
+            result[i] = ConvertTypeFromEnumToString(allEventTypes[i]);
+        }
+
+        return result;
+    }
+
+    private String ConvertTypeFromEnumToString(Constants.EventType eventType) {
+        String result = null;
+
+        switch (eventType) {
+            case Lecture:
+                result = "Lecture";
+                break;
+            case Seminar:
+                result = "Seminar";
+                break;
+            case Workshop:
+                result = "Workshop";
+                break;
+            case Non_Technical_Lecture:
+                result = "Non - Technical Lecture";
+                break;
+            default:
+                result = "Null";
+                break;
+        }
+
+        return result;
     }
 
     @Override

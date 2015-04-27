@@ -24,8 +24,8 @@ import lab.chabingba.telerikacademyschedule.Helpers.ListActivityHelpers;
 import lab.chabingba.telerikacademyschedule.Helpers.UpdateHelpers;
 
 public class MainActivity extends ListActivity {
-    public static MainActivity contextOfMainActivity;
-    public ArrayList<Event> listOfEvents = Data.GetListOfEvents();
+    private static MainActivity contextOfMainActivity;
+    private ArrayList<Event> listOfEvents = Data.GetListOfEvents();
 
     private File outputFile = new File(Constants.TemplateFileDir, "output.txt");
 

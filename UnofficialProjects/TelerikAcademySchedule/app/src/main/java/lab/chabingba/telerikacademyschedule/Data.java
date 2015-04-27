@@ -28,7 +28,7 @@ public final class Data {
     }
 
     public static Calendar GetCalendar() {
-        return Data.GetCalendar();
+        return Data.calendar;
     }
 
     public static void SetCalendar(Calendar value) {

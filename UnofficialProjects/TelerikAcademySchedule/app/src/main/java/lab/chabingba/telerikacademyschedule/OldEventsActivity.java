@@ -1,6 +1,7 @@
 package lab.chabingba.telerikacademyschedule;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -26,8 +27,8 @@ import lab.chabingba.telerikacademyschedule.Helpers.UpdateHelpers;
  * Created by Tsvetan on 2015-04-24.
  */
 public class OldEventsActivity extends ListActivity {
-    public static OldEventsActivity contextOfOldEventsActivity;
-    public ArrayList<Event> listOfOldEvents = Data.GetListOfOldEvents();
+    private OldEventsActivity contextOfOldEventsActivity;
+    private ArrayList<Event> listOfOldEvents = Data.GetListOfOldEvents();
     private File outputFile = new File(Constants.TemplateFileDir, "OldEvents.txt");
 
     public void onCreate(Bundle savedInstanceState) {
@@ -98,7 +99,7 @@ public class OldEventsActivity extends ListActivity {
                 Data.GetListOfOldEvents().clear();
                 boolean fileIsDeleted = outputFile.delete();
 
-                if (!fileIsDeleted){
+                if (!fileIsDeleted) {
                     Log.e("FILE", "The outputFile in OldEventsActivity is not deleted.");
                 }
 
@@ -164,5 +165,9 @@ public class OldEventsActivity extends ListActivity {
         Intent setIntent = new Intent(OldEventsActivity.this, MainActivity.class);
         startActivity(setIntent);
         finish();
+    }
+
+    public Context GetContext() {
+        return this.contextOfOldEventsActivity;
     }
 }

@@ -9,4 +9,11 @@ import java.io.File;
  */
 public final class Constants {
     public static final File TemplateFileDir = new File(Environment.getExternalStorageDirectory() + "/TelerikScheduleAPP/");
+
+    public enum EventType{
+        Lecture,
+        Workshop,
+        Non_Technical_Lecture,
+        Seminar;
+    }
 }
