@@ -88,7 +88,7 @@ public final class ListActivityHelpers {
         return eventsNamesAndDates;
     }
 
-    private static void AlarmForPendingEvent() {
+    public static void AlarmForPendingEvent() {
 
         Intent intentForNotification = new Intent(MainActivity.GetContext(), EventNotificationService.class);
 

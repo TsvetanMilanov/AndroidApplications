@@ -10,6 +10,6 @@
         android:layout_height="fill_parent"
         android:background="#55FF28">
 
-        </ListView>
+    </ListView>
 
-    </LinearLayout>
+</LinearLayout>

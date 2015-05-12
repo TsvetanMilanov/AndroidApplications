@@ -26,8 +26,10 @@ import lab.chabingba.telerikacademyschedule.Helpers.UpdateHelpers;
 public class MainActivity extends ListActivity {
     private static MainActivity contextOfMainActivity;
     private ArrayList<Event> listOfEvents = Data.GetListOfEvents();
+    private ArrayList<Event> listOfOldEvents = Data.GetListOfOldEvents();
 
     private File outputFile = new File(Constants.TemplateFileDir, "output.txt");
+    private File outputFileForOldEvents = new File(Constants.TemplateFileDir, "OldEvents.txt");
 
     public static Context GetContext() {
         return contextOfMainActivity;
@@ -52,14 +54,18 @@ public class MainActivity extends ListActivity {
 
         Data.SetListValuesOfEvents(listOfEvents);
 
+        ListActivityHelpers.SetInitialDate();
+
         //Do something only on first app run.
         ListActivityHelpers.FirstAppRun(this, outputFile, listOfEvents);
-
-        ListActivityHelpers.SetInitialDate();
 
         Data.SetListValuesOfEvents(listOfEvents);
 
         FileHelpers.ReadEventsFromFile(listOfEvents, outputFile);
+
+        FileHelpers.ReadEventsFromFile(listOfOldEvents, outputFileForOldEvents);
+
+        Data.SetListValuesOfOldEvents(listOfOldEvents);
 
         //RemoveOldEvents();
 
@@ -185,6 +191,10 @@ public class MainActivity extends ListActivity {
 
                 startActivity(refreshMainIntent);
                 finish();
+                break;
+
+            case R.id.forceNotifications:
+                ListActivityHelpers.AlarmForPendingEvent();
                 break;
             case R.id.exit:
                 finish();

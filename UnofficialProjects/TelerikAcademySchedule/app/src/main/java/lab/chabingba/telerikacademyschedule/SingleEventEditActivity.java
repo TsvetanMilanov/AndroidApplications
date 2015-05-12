@@ -24,12 +24,13 @@ import static lab.chabingba.telerikacademyschedule.Helpers.Constants.EventType.v
  * Created by Tsvetan on 2015-04-13.
  */
 public class SingleEventEditActivity extends Activity {
+    private Event event = new Event();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_event_edit_view);
 
-        final Event event = (Event) getIntent().getSerializableExtra("Event");
+        this.event = (Event) getIntent().getSerializableExtra("Event");
 
         TextView textViewName = (TextView) findViewById(R.id.tvName);
 
@@ -124,6 +125,26 @@ public class SingleEventEditActivity extends Activity {
             result[i] = ConvertTypeFromEnumToString(allEventTypes[i]);
         }
 
+        result = SetFirstEventType(result);
+
+        return result;
+    }
+
+    private String[] SetFirstEventType(String[] result) {
+
+        String currentEventType = this.event.GetEventName();
+
+        for (int i = 0; i < result.length; i++) {
+            String currentType = result[i];
+
+            if (currentEventType.equals(currentType)) {
+                String temp = result[0];
+                result[0] = currentEventType;
+                result[i] = temp;
+            }
+
+        }
+
         return result;
     }
 
@@ -142,6 +163,9 @@ public class SingleEventEditActivity extends Activity {
                 break;
             case Non_Technical_Lecture:
                 result = "Non - Technical Lecture";
+                break;
+            case Exam:
+                result = "Exam";
                 break;
             default:
                 result = "Null";

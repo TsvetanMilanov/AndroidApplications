@@ -14,6 +14,7 @@ public final class Constants {
         Lecture,
         Workshop,
         Non_Technical_Lecture,
-        Seminar;
+        Seminar,
+        Exam;
     }
 }

@@ -18,7 +18,8 @@ public class LogoActivity extends Activity {
         Thread logoThread = new Thread() {
             public void run() {
                 try {
-                    sleep(1500);
+                    // TODO: return to 1000/1500.
+                    sleep(0);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
