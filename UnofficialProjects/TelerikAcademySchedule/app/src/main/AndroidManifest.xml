@@ -3,6 +3,10 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.alarm.permissions.SET_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
 
     <application
         android:allowBackup="true"
@@ -61,6 +65,13 @@
             android:enabled="true">
 
         </service>
+
+        <receiver android:name=".AlarmReciever">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="lab.chabingba.telerikacademyschedule.ALARMRECIEVER" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -194,7 +194,8 @@ public class MainActivity extends ListActivity {
                 break;
 
             case R.id.forceNotifications:
-                ListActivityHelpers.AlarmForPendingEvent();
+                Intent intentForNotification = new Intent(this, AlarmReciever.class);
+                sendBroadcast(intentForNotification);
                 break;
             case R.id.exit:
                 finish();

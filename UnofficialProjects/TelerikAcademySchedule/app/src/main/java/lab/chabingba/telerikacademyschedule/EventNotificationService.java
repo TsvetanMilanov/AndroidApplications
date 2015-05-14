@@ -1,16 +1,11 @@
 package lab.chabingba.telerikacademyschedule;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.media.RingtoneManager;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
-import java.util.Calendar;
+import lab.chabingba.telerikacademyschedule.Helpers.NotificationHelpers;
 
 /**
  * Created by Tsvetan on 2015-04-23.
@@ -34,36 +29,10 @@ public class EventNotificationService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i("NOTIFSERVICE", "Service started");
 
-        boolean hasEvent = CheckForEventToday();
+        this.event = NotificationHelpers.CheckForEventToday();
 
-        if (hasEvent) {
-            Log.i("EVENT", "Has notification");
-
-            Intent intentForEdit = new Intent(EventNotificationService.this, SingleEventViewActivity.class);
-
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("BundleEvent", this.event);
-            bundle.putSerializable("List", Data.GetListOfEvents());
-
-            intentForEdit.putExtras(bundle);
-
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intentForEdit, 0);
-
-            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-            Notification notification = new Notification(R.drawable.icon, "Telerik Academy Event!", System.currentTimeMillis());
-
-            notification.setLatestEventInfo(this, "Telerik Academy Event!!!", this.event.GetEventName() + " " + this.event.GetEventHour(), pendingIntent);
-
-            notification.icon = R.drawable.icon;
-
-            notification.sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            /*
-            //Uncomment for auto cancel the notification.
-            notification.flags = notification.flags | notification.FLAG_AUTO_CANCEL;
-            */
-
-            notificationManager.notify(1, notification);
+        if (this.event != null) {
+            NotificationHelpers.CreateNotification(event);
         }
 
         return super.onStartCommand(intent, flags, startId);
@@ -72,27 +41,5 @@ public class EventNotificationService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-    }
-
-    private boolean CheckForEventToday() {
-
-        Calendar currentDate = Calendar.getInstance();
-
-        Calendar dateOfEvent;
-
-        for (int i = 0; i < Data.GetListOfEvents().size(); i++) {
-            dateOfEvent = Data.GetListOfEvents().get(i).GetEventDateAsCalendarDate();
-
-            if (dateOfEvent.get(Calendar.YEAR) == currentDate.get(Calendar.YEAR)
-                    && dateOfEvent.get(Calendar.MONTH) == currentDate.get(Calendar.MONTH)
-                    && dateOfEvent.get(Calendar.DAY_OF_MONTH) == currentDate.get(Calendar.DAY_OF_MONTH)) {
-                this.event = Data.GetListOfEvents().get(i);
-                Log.i("EVENTCHECK", "Found event for today.");
-                return true;
-            }
-        }
-
-        Log.i("EVENTCHECK", "No event for today.");
-        return false;
     }
 }

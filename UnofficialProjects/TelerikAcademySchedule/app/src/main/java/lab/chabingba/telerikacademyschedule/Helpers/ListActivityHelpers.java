@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -89,10 +90,11 @@ public final class ListActivityHelpers {
     }
 
     public static void AlarmForPendingEvent() {
+        Log.i("ALARM", "AlarmForPendingIntentStarted");
 
         Intent intentForNotification = new Intent(MainActivity.GetContext(), EventNotificationService.class);
 
-        PendingIntent pendingIntent = PendingIntent.getService(MainActivity.GetContext(), 0, intentForNotification, 0);
+        PendingIntent pendingIntent = PendingIntent.getService(MainActivity.GetContext(), 0, intentForNotification, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) MainActivity.GetContext().getSystemService(Context.ALARM_SERVICE);
 
