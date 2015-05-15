@@ -22,6 +22,7 @@ import lab.chabingba.telerikacademyschedule.Helpers.Constants;
 import lab.chabingba.telerikacademyschedule.Helpers.FileHelpers;
 import lab.chabingba.telerikacademyschedule.Helpers.ListActivityHelpers;
 import lab.chabingba.telerikacademyschedule.Helpers.UpdateHelpers;
+import lab.chabingba.telerikacademyschedule.Notifications.AlarmReciever;
 
 public class MainActivity extends ListActivity {
     private static MainActivity contextOfMainActivity;
@@ -39,7 +40,7 @@ public class MainActivity extends ListActivity {
         super.onCreate(savedInstanceState);
 
         View view = this.getWindow().getDecorView();
-        view.setBackgroundColor(Color.rgb(85, 255, 40));
+        view.setBackgroundColor(Color.WHITE);
 
         //Set the value of the Content variable to use from another classes.
         contextOfMainActivity = this;
@@ -80,7 +81,7 @@ public class MainActivity extends ListActivity {
         /* Create string array with all event names and dates as string for list items. */
         String[] eventsThumbnails = ListActivityHelpers.CreateEventThumbnails(listOfEvents);
 
-        setListAdapter(new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, eventsThumbnails));
+        setListAdapter(new CustomAdapter(this, eventsThumbnails));
         registerForContextMenu(this.getListView());
     }
 

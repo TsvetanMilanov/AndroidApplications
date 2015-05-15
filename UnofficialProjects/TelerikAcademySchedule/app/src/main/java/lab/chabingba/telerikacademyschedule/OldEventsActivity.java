@@ -61,7 +61,7 @@ public class OldEventsActivity extends ListActivity {
 
         String[] eventsThumbnails = ListActivityHelpers.CreateEventThumbnails(reversedListOfOldEvents);
 
-        setListAdapter(new ArrayAdapter<String>(OldEventsActivity.this, android.R.layout.simple_list_item_1, eventsThumbnails));
+        setListAdapter(new CustomAdapter(this, eventsThumbnails));
         registerForContextMenu(this.getListView());
     }
 

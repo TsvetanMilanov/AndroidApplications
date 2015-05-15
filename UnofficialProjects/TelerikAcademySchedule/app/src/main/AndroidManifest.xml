@@ -61,12 +61,12 @@
         </activity>
 
         <service
-            android:name=".EventNotificationService"
+            android:name=".Notifications.EventNotificationService"
             android:enabled="true">
 
         </service>
 
-        <receiver android:name=".AlarmReciever">
+        <receiver android:name=".Notifications.AlarmReciever">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="lab.chabingba.telerikacademyschedule.ALARMRECIEVER" />

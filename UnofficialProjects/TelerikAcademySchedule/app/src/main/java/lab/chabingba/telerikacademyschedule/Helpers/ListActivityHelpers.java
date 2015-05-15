@@ -13,7 +13,7 @@ import java.util.Calendar;
 
 import lab.chabingba.telerikacademyschedule.Data;
 import lab.chabingba.telerikacademyschedule.Event;
-import lab.chabingba.telerikacademyschedule.EventNotificationService;
+import lab.chabingba.telerikacademyschedule.Notifications.EventNotificationService;
 import lab.chabingba.telerikacademyschedule.MainActivity;
 
 /**
