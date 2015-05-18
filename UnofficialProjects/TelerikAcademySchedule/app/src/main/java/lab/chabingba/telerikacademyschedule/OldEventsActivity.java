@@ -109,9 +109,6 @@ public class OldEventsActivity extends ListActivity {
                 startActivity(refreshOldEventsActivityIntent);
                 finish();
                 break;
-            case R.id.exit:
-                finish();
-                break;
         }
         return false;
     }
