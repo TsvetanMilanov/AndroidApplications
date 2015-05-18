@@ -13,7 +13,7 @@ import java.util.Calendar;
 
 import lab.chabingba.telerikacademyschedule.Data;
 import lab.chabingba.telerikacademyschedule.Event;
-import lab.chabingba.telerikacademyschedule.MainActivity;
+import lab.chabingba.telerikacademyschedule.CurrentEventsActivity;
 import lab.chabingba.telerikacademyschedule.Notifications.AlarmReceiver;
 import lab.chabingba.telerikacademyschedule.Notifications.EventNotificationService;
 
@@ -35,7 +35,7 @@ public final class EventHelpers {
         /* Create the list of events on the first app run. */
             FileHelpers.FirstInitList(outputFile, listOfEvents);
 
-            EventHelpers.AlarmForPendingEvent();
+            EventHelpers.AlarmForPendingEvent(context);
 
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("FIRST_RUN", true);
@@ -90,14 +90,14 @@ public final class EventHelpers {
         return eventsNamesAndDates;
     }
 
-    public static void AlarmForPendingEvent() {
+    public static void AlarmForPendingEvent(Context context) {
         Log.i("ALARM", "AlarmForPendingIntentStarted");
 
-        Intent intentForNotification = new Intent(MainActivity.GetContext(), EventNotificationService.class);
+        Intent intentForNotification = new Intent(context, EventNotificationService.class);
 
-        PendingIntent pendingIntent = PendingIntent.getService(MainActivity.GetContext(), 0, intentForNotification, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getService(context, 0, intentForNotification, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        AlarmManager alarmManager = (AlarmManager) MainActivity.GetContext().getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         //Set the notification time.
         Data.GetCalendar().set(Calendar.HOUR, 10);

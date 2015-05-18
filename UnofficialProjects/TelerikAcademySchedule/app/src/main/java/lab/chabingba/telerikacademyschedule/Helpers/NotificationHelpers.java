@@ -13,7 +13,7 @@ import java.util.Calendar;
 
 import lab.chabingba.telerikacademyschedule.Data;
 import lab.chabingba.telerikacademyschedule.Event;
-import lab.chabingba.telerikacademyschedule.MainActivity;
+import lab.chabingba.telerikacademyschedule.CurrentEventsActivity;
 import lab.chabingba.telerikacademyschedule.R;
 import lab.chabingba.telerikacademyschedule.SingleEventViewActivity;
 
@@ -47,7 +47,7 @@ public class NotificationHelpers {
     public static void CreateNotification(Event event) {
         Log.i("EVENT", "Has notification");
 
-        Intent intentForEdit = new Intent(MainActivity.GetContext(), SingleEventViewActivity.class);
+        Intent intentForEdit = new Intent(CurrentEventsActivity.GetContext(), SingleEventViewActivity.class);
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("BundleEvent", event);
@@ -55,7 +55,7 @@ public class NotificationHelpers {
 
         intentForEdit.putExtras(bundle);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.GetContext(), 0, intentForEdit, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(CurrentEventsActivity.GetContext(), 0, intentForEdit, 0);
 
         Calendar date = Calendar.getInstance();
 
@@ -64,11 +64,11 @@ public class NotificationHelpers {
 
         long dateAsLong = date.getTimeInMillis();
 
-        NotificationManager notificationManager = (NotificationManager) MainActivity.GetContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) CurrentEventsActivity.GetContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
         Notification notification = new Notification(R.drawable.icon, "Telerik Academy Event!", dateAsLong);
 
-        notification.setLatestEventInfo(MainActivity.GetContext(), "Telerik Academy Event!!!", event.GetEventName(), pendingIntent);
+        notification.setLatestEventInfo(CurrentEventsActivity.GetContext(), "Telerik Academy Event!!!", event.GetEventName(), pendingIntent);
 
         notification.icon = R.drawable.icon;
 

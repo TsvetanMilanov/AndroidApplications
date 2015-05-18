@@ -109,7 +109,7 @@ public class SingleEventEditActivity extends Activity {
                     throw new IllegalArgumentException("Field cannot be empty!");
                 }
 
-                Intent intent = new Intent(SingleEventEditActivity.this, MainActivity.class);
+                Intent intent = new Intent(SingleEventEditActivity.this, CurrentEventsActivity.class);
 
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("Event", editedEvent);
@@ -183,7 +183,7 @@ public class SingleEventEditActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        Intent setIntent = new Intent(SingleEventEditActivity.this, MainActivity.class);
+        Intent setIntent = new Intent(SingleEventEditActivity.this, CurrentEventsActivity.class);
         startActivity(setIntent);
         finish();
     }

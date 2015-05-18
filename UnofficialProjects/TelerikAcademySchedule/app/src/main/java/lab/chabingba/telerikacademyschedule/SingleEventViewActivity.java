@@ -76,7 +76,7 @@ public class SingleEventViewActivity extends Activity {
                         break;
                     }
                 }
-                Intent setIntent = new Intent(SingleEventViewActivity.this, MainActivity.class);
+                Intent setIntent = new Intent(SingleEventViewActivity.this, CurrentEventsActivity.class);
                 startActivity(setIntent);
                 finish();
             }
@@ -85,7 +85,7 @@ public class SingleEventViewActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        Intent setIntent = new Intent(SingleEventViewActivity.this, MainActivity.class);
+        Intent setIntent = new Intent(SingleEventViewActivity.this, CurrentEventsActivity.class);
         startActivity(setIntent);
         finish();
     }

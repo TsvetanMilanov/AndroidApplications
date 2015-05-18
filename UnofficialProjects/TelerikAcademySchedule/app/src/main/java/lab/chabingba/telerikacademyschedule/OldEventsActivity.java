@@ -154,8 +154,6 @@ public class OldEventsActivity extends ListActivity {
     }
 
     public void onBackPressed() {
-        Intent setIntent = new Intent(OldEventsActivity.this, MainActivity.class);
-        startActivity(setIntent);
         finish();
     }
 

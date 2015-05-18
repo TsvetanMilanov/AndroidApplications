@@ -14,6 +14,6 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i("RECEIVER", "RECEIVED");
-        EventHelpers.AlarmForPendingEvent();
+        EventHelpers.AlarmForPendingEvent(context);
     }
 }

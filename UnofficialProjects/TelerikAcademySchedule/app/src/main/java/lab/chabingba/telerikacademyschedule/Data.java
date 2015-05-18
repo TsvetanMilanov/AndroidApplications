@@ -1,7 +1,10 @@
 package lab.chabingba.telerikacademyschedule;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import lab.chabingba.telerikacademyschedule.Helpers.Constants;
 
 public final class Data {
 
@@ -10,6 +13,10 @@ public final class Data {
     private static ArrayList<Event> listOfEvents = new ArrayList<>();
 
     private static ArrayList<Event> listOfOldEvents = new ArrayList<>();
+
+    private static File outputFile = new File(Constants.TemplateFileDir, "output.txt");
+
+    private static File outputFileForOldEvents = new File(Constants.TemplateFileDir, "OldEvents.txt");
 
     public static ArrayList<Event> GetListOfEvents() {
         return Data.listOfEvents;
@@ -39,5 +46,13 @@ public final class Data {
 
     public static void SetCalendar(Calendar value) {
         Data.calendar = value;
+    }
+
+    public static File GetOutputFile() {
+        return Data.outputFile;
+    }
+
+    public static File GetOutputFileForOldEvents() {
+        return Data.outputFileForOldEvents;
     }
 }
