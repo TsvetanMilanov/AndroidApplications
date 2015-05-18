@@ -11,9 +11,11 @@ public class Event implements Serializable, Comparable {
     private Calendar eventDate;
     private String eventHour;
     private String eventDescription;
+    private boolean hasNotification;
 
     public Event() {
         this.isFinished = false;
+        this.hasNotification = false;
     }
 
     public Event(int eventID, String eventName, Calendar eventDate, String eventHour, String eventDescription) {
@@ -88,6 +90,18 @@ public class Event implements Serializable, Comparable {
         result.append("\r\n");
         result.append(this.GetEventDescription());
         result.append("\r\n");
+        if (this.GetIsFinished() == true) {
+            result.append("true");
+        } else {
+            result.append("false");
+        }
+        result.append("\r\n");
+        if (this.GetHasNotification() == true) {
+            result.append("true");
+        } else {
+            result.append("false");
+        }
+        result.append("\r\n");
 
         return result.toString().trim();
     }
@@ -98,6 +112,14 @@ public class Event implements Serializable, Comparable {
 
     public void SetIsFinished(boolean value) {
         this.isFinished = value;
+    }
+
+    public boolean GetHasNotification() {
+        return this.hasNotification;
+    }
+
+    public void SetHasNotification(boolean value) {
+        this.hasNotification = value;
     }
 
     @Override

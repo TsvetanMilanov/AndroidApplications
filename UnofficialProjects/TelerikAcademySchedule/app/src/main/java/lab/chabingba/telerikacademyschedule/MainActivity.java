@@ -10,19 +10,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 
 import lab.chabingba.telerikacademyschedule.Helpers.Constants;
+import lab.chabingba.telerikacademyschedule.Helpers.EventHelpers;
 import lab.chabingba.telerikacademyschedule.Helpers.FileHelpers;
-import lab.chabingba.telerikacademyschedule.Helpers.ListActivityHelpers;
 import lab.chabingba.telerikacademyschedule.Helpers.UpdateHelpers;
-import lab.chabingba.telerikacademyschedule.Notifications.AlarmReciever;
 
 public class MainActivity extends ListActivity {
     private static MainActivity contextOfMainActivity;
@@ -45,6 +42,8 @@ public class MainActivity extends ListActivity {
         //Set the value of the Content variable to use from another classes.
         contextOfMainActivity = this;
 
+        EventHelpers.StartAlarmReceiver(this);
+
         /* Update the output.txt if an event was edited
         (on app start Data.listOfEvents is always empty, so only when adding event from edit to it it will have events in it.) */
 
@@ -55,10 +54,10 @@ public class MainActivity extends ListActivity {
 
         Data.SetListValuesOfEvents(listOfEvents);
 
-        ListActivityHelpers.SetInitialDate();
+        EventHelpers.SetInitialDate();
 
         //Do something only on first app run.
-        ListActivityHelpers.FirstAppRun(this, outputFile, listOfEvents);
+        EventHelpers.FirstAppRun(this, outputFile, listOfEvents);
 
         Data.SetListValuesOfEvents(listOfEvents);
 
@@ -67,8 +66,6 @@ public class MainActivity extends ListActivity {
         FileHelpers.ReadEventsFromFile(listOfOldEvents, outputFileForOldEvents);
 
         Data.SetListValuesOfOldEvents(listOfOldEvents);
-
-        //RemoveOldEvents();
 
         Data.SetListValuesOfEvents(listOfEvents);
 
@@ -79,47 +76,10 @@ public class MainActivity extends ListActivity {
         Data.SetListValuesOfEvents(listOfEvents);
 
         /* Create string array with all event names and dates as string for list items. */
-        String[] eventsThumbnails = ListActivityHelpers.CreateEventThumbnails(listOfEvents);
+        String[] eventsThumbnails = EventHelpers.CreateEventThumbnails(listOfEvents);
 
         setListAdapter(new CustomAdapter(this, eventsThumbnails));
         registerForContextMenu(this.getListView());
-    }
-
-    private void RemoveOldEvents() {
-        Calendar currentDate = Calendar.getInstance();
-        Calendar eventDate;
-
-        while (true) {
-            Event currentEvent = listOfEvents.get(0);
-
-            eventDate = currentEvent.GetEventDateAsCalendarDate();
-
-            if (eventDate.get(Calendar.YEAR) > currentDate.get(Calendar.YEAR)) {
-                break;
-            } else if (eventDate.get(Calendar.YEAR) == currentDate.get(Calendar.YEAR)) {
-                if (eventDate.get(Calendar.MONTH) > currentDate.get(Calendar.MONTH)) {
-                    break;
-                } else if (eventDate.get(Calendar.MONTH) == currentDate.get(Calendar.MONTH)) {
-                    if (eventDate.get(Calendar.DAY_OF_MONTH) > currentDate.get(Calendar.DAY_OF_MONTH)) {
-                        break;
-                    } else if (eventDate.get(Calendar.DAY_OF_MONTH) == currentDate.get(Calendar.DAY_OF_MONTH)) {
-                        break;
-                    } else {
-                        Data.GetListOfOldEvents().add(currentEvent);
-                        listOfEvents.remove(currentEvent);
-                        Data.SetListValuesOfEvents(listOfEvents);
-                    }
-                } else {
-                    Data.GetListOfOldEvents().add(currentEvent);
-                    listOfEvents.remove(currentEvent);
-                    Data.SetListValuesOfEvents(listOfEvents);
-                }
-            } else {
-                Data.GetListOfOldEvents().add(currentEvent);
-                listOfEvents.remove(currentEvent);
-                Data.SetListValuesOfEvents(listOfEvents);
-            }
-        }
     }
 
     @Override
@@ -187,7 +147,7 @@ public class MainActivity extends ListActivity {
                 finish();
                 break;
             case R.id.removeOldEvents:
-                RemoveOldEvents();
+                EventHelpers.RemoveOldEvents(listOfEvents);
                 Intent refreshMainIntent = new Intent(MainActivity.this, MainActivity.class);
 
                 startActivity(refreshMainIntent);
@@ -195,8 +155,12 @@ public class MainActivity extends ListActivity {
                 break;
 
             case R.id.forceNotifications:
-                Intent intentForNotification = new Intent(this, AlarmReciever.class);
-                sendBroadcast(intentForNotification);
+                for (int i = 0; i < this.listOfEvents.size(); i++) {
+                    if (listOfEvents.get(i).GetHasNotification()) {
+                        listOfEvents.get(i).SetHasNotification(false);
+                    }
+                }
+                EventHelpers.StartAlarmReceiver(this);
                 break;
             case R.id.exit:
                 finish();

@@ -25,6 +25,12 @@ public final class Data {
 
     public static void SetListValuesOfOldEvents(ArrayList<Event> events) {
         Data.listOfOldEvents = events;
+
+        if (Data.listOfOldEvents.size() > 0) {
+            for (int i = 0; i < Data.listOfOldEvents.size(); i++) {
+                Data.listOfOldEvents.get(i).SetIsFinished(true);
+            }
+        }
     }
 
     public static Calendar GetCalendar() {

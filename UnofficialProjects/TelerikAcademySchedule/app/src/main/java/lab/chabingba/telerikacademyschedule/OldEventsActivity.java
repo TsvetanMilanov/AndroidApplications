@@ -11,16 +11,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import lab.chabingba.telerikacademyschedule.Helpers.Constants;
+import lab.chabingba.telerikacademyschedule.Helpers.EventHelpers;
 import lab.chabingba.telerikacademyschedule.Helpers.FileHelpers;
-import lab.chabingba.telerikacademyschedule.Helpers.ListActivityHelpers;
 import lab.chabingba.telerikacademyschedule.Helpers.UpdateHelpers;
 
 /**
@@ -59,7 +59,7 @@ public class OldEventsActivity extends ListActivity {
         ArrayList<Event> reversedListOfOldEvents = listOfOldEvents;
         Collections.reverse(reversedListOfOldEvents);
 
-        String[] eventsThumbnails = ListActivityHelpers.CreateEventThumbnails(reversedListOfOldEvents);
+        String[] eventsThumbnails = EventHelpers.CreateEventThumbnails(reversedListOfOldEvents);
 
         setListAdapter(new CustomAdapter(this, eventsThumbnails));
         registerForContextMenu(this.getListView());
@@ -131,17 +131,9 @@ public class OldEventsActivity extends ListActivity {
 
         switch (item.getItemId()) {
             case R.id.editEvent:
-                Event eventToOpen = listOfOldEvents.get(id);
-
-                Intent intent1 = new Intent(OldEventsActivity.this, SingleEventEditActivity.class);
-
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("Event", eventToOpen);
-                bundle.putSerializable("List", listOfOldEvents);
-
-                intent1.putExtras(bundle);
-                startActivity(intent1);
-                finish();
+                CharSequence toastText = "Can't edit old events.";
+                Toast toast = Toast.makeText(this, toastText, Toast.LENGTH_LONG);
+                toast.show();
                 return true;
             case R.id.removeEvent:
                 for (int i = 0; i < Data.GetListOfOldEvents().size(); i++) {

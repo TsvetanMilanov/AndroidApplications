@@ -134,21 +134,21 @@ public final class FileHelpers {
 
         for (int i = 0; i < allEventsArray.length; i++) {
 
-            if (allEventsArray[i].length() <= 0) {
+            if (allEventsArray[i].length() <= 0 || i >= allEventsArray.length) {
                 continue;
             }
 
             int eventID = Integer.parseInt(allEventsArray[i]);
             i++;
 
-            if (allEventsArray[i].length() <= 0) {
+            if (allEventsArray[i].length() <= 0 || i >= allEventsArray.length) {
                 continue;
             }
 
             String name = allEventsArray[i];
             i++;
 
-            if (allEventsArray[i].length() <= 0) {
+            if (allEventsArray[i].length() <= 0 || i >= allEventsArray.length) {
                 continue;
             }
 
@@ -163,20 +163,49 @@ public final class FileHelpers {
             date.setTime(parsedDate);
             i++;
 
-            if (allEventsArray[i].length() <= 0) {
+            if (allEventsArray[i].length() <= 0 || i >= allEventsArray.length) {
                 continue;
             }
 
             String hour = allEventsArray[i];
             i++;
 
-            if (allEventsArray[i].length() <= 0) {
+            if (allEventsArray[i].length() <= 0 || i >= allEventsArray.length) {
                 continue;
             }
 
             String description = allEventsArray[i];
+            i++;
+
+            if (allEventsArray[i].length() <= 0 || i >= allEventsArray.length) {
+                continue;
+            }
+
+            boolean isFinished;
+
+            if (allEventsArray[i].equals("true")) {
+                isFinished = true;
+            } else {
+                isFinished = false;
+            }
+
+            i++;
+
+            if (allEventsArray[i].length() <= 0 || i >= allEventsArray.length) {
+                continue;
+            }
+
+            boolean hasNotification;
+
+            if (allEventsArray[i].equals("true")) {
+                hasNotification = true;
+            } else {
+                hasNotification = false;
+            }
 
             Event newEventToAdd = new Event(eventID, name, date, hour, description);
+            newEventToAdd.SetIsFinished(isFinished);
+            newEventToAdd.SetHasNotification(hasNotification);
 
             if (newEventToAdd != null) {
                 listOfEvents.add(newEventToAdd);

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 public class SingleEventViewActivity extends Activity {
@@ -34,6 +35,16 @@ public class SingleEventViewActivity extends Activity {
         textViewDescription.append("\r\n" + event.GetEventDescription());
 
         Button editButton = (Button) findViewById(R.id.buttonEdit);
+
+        CheckBox cbIsFinished = (CheckBox) findViewById(R.id.cbFinished);
+
+        cbIsFinished.setEnabled(false);
+
+        cbIsFinished.setChecked(event.GetIsFinished());
+
+        if (event.GetIsFinished()) {
+            editButton.setVisibility(View.INVISIBLE);
+        }
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override

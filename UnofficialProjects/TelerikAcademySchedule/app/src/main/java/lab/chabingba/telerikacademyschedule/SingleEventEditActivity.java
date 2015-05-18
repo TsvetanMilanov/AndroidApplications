@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -78,6 +79,10 @@ public class SingleEventEditActivity extends Activity {
 
         etDescription.setText(event.GetEventDescription());
 
+        final CheckBox cbEditIsFinished = (CheckBox) findViewById(R.id.cbEditIsFinished);
+
+        cbEditIsFinished.setChecked(event.GetIsFinished());
+
         Button doneButton = (Button) findViewById(R.id.buttonDone);
 
         doneButton.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +103,7 @@ public class SingleEventEditActivity extends Activity {
                     editedEvent.SetEventDate(date);
                     editedEvent.SetEventHour(etHour.getText().toString());
                     editedEvent.SetEventDescription(etDescription.getText().toString());
+                    editedEvent.SetIsFinished(cbEditIsFinished.isChecked());
 
                 } else {
                     throw new IllegalArgumentException("Field cannot be empty!");

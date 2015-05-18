@@ -47,8 +47,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_marginLeft="100dp"
-                        android:layout_marginStart="100dp"
-                        />
+                        android:layout_marginStart="100dp" />
                 </RelativeLayout>
             </TableRow>
 
@@ -136,6 +135,24 @@
                     android:maxLines="100"
                     android:scrollHorizontally="false" />
 
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"></TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Event finished."
+                    android:textSize="23dp"
+                    android:id="@+id/cbEditIsFinished"
+                    android:layout_column="0"
+                    android:checked="false" />
             </TableRow>
 
 

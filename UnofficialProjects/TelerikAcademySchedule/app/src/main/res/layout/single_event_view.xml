@@ -95,6 +95,16 @@
 
         </TableLayout>
 
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Event finished."
+            android:id="@+id/cbFinished"
+            android:checked="false"
+            android:textSize="23dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="30dp" />
+
         <Button
             android:id="@+id/buttonEdit"
             android:text="Edit event"
