@@ -179,4 +179,30 @@ public final class EventHelpers {
             }
         }
     }
+
+    public static void AddDifferentEvents(ArrayList<Event> destinationList, ArrayList<Event> sourceList) {
+        int destinationListSize = destinationList.size();
+        int sourceListSize = sourceList.size();
+        boolean containsEvent = false;
+
+        for (int i = 0; i < sourceListSize; i++) {
+            Event newEvent = sourceList.get(i);
+            containsEvent = false;
+
+            for (int j = 0; j < destinationListSize; j++) {
+                Event oldEvent = destinationList.get(j);
+
+                if (oldEvent.Compare(newEvent)) {
+                    containsEvent = true;
+                    break;
+                } else {
+                    containsEvent = false;
+                }
+            }
+
+            if (containsEvent == false) {
+                destinationList.add(newEvent);
+            }
+        }
+    }
 }

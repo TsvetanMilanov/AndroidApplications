@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import lab.chabingba.telerikacademyschedule.Helpers.Engine;
@@ -156,6 +158,16 @@ public class CurrentEventsActivity extends ListActivity {
                 finish();
                 return true;
             case R.id.removeEvent:
+                if (listOfEvents.size() == 1) {
+                    Data.GetOutputFile().delete();
+                    Data.GetListOfEvents().clear();
+                    try {
+                        Data.GetOutputFile().createNewFile();
+                    } catch (IOException e) {
+                        Log.e("FILE","Can't create output.txt;");
+                    }
+                }
+
                 for (int i = 0; i < Data.GetListOfEvents().size(); i++) {
                     Event currentEvent = Data.GetListOfEvents().get(i);
 

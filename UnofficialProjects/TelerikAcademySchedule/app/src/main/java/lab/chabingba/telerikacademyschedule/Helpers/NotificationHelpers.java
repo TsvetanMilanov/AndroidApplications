@@ -19,7 +19,7 @@ import lab.chabingba.telerikacademyschedule.SingleEventViewActivity;
 /**
  * Created by Tsvetan on 2015-05-14.
  */
-public class NotificationHelpers {
+public final class NotificationHelpers {
     public static Event CheckForEventToday() {
         Event event = null;
 

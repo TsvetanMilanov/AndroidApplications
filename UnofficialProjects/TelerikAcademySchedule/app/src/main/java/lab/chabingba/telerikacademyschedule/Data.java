@@ -8,15 +8,11 @@ import lab.chabingba.telerikacademyschedule.Helpers.Constants;
 
 public final class Data {
 
+    public static File outputFile = new File(Constants.FileDirectory, "output.txt");
+    public static File outputFileForOldEvents = new File(Constants.FileDirectory, "OldEvents.txt");
     private static Calendar calendar;
-
     private static ArrayList<Event> listOfEvents = new ArrayList<>();
-
     private static ArrayList<Event> listOfOldEvents = new ArrayList<>();
-
-    private static File outputFile = new File(Constants.FileDirectory, "output.txt");
-
-    private static File outputFileForOldEvents = new File(Constants.FileDirectory, "OldEvents.txt");
 
     public static ArrayList<Event> GetListOfEvents() {
         return Data.listOfEvents;
@@ -49,10 +45,10 @@ public final class Data {
     }
 
     public static File GetOutputFile() {
-        return Data.outputFile;
+        return outputFile;
     }
 
     public static File GetOutputFileForOldEvents() {
-        return Data.outputFileForOldEvents;
+        return outputFileForOldEvents;
     }
 }

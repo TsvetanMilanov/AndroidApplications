@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -95,7 +97,15 @@ public class OldEventsActivity extends ListActivity {
 
         switch (item.getItemId()) {
             case R.id.clearOldEvents:
+                Data.outputFileForOldEvents.delete();
+
                 Data.GetListOfOldEvents().clear();
+
+                try {
+                    Data.GetOutputFileForOldEvents().createNewFile();
+                } catch (IOException e) {
+                    Log.e("FILE", "Can't create OldEvents.txt;");
+                }
 
                 Intent refreshOldEventsActivityIntent = new Intent(OldEventsActivity.this, OldEventsActivity.class);
 
@@ -126,6 +136,16 @@ public class OldEventsActivity extends ListActivity {
                 toast.show();
                 return true;
             case R.id.removeEvent:
+                if (listOfOldEvents.size() == 1) {
+                    Data.GetOutputFileForOldEvents().delete();
+                    Data.GetListOfOldEvents().clear();
+                    try {
+                        Data.GetOutputFileForOldEvents().createNewFile();
+                    } catch (IOException e) {
+                        Log.e("FILE", "Can't create OldEvents.txt;");
+                    }
+                }
+
                 for (int i = 0; i < Data.GetListOfOldEvents().size(); i++) {
                     Event currentEvent = Data.GetListOfOldEvents().get(i);
 
@@ -136,7 +156,7 @@ public class OldEventsActivity extends ListActivity {
                 }
 
                 Data.SetListValuesOfOldEvents(listOfOldEvents);
-                
+
                 Intent setIntent = new Intent(OldEventsActivity.this, OldEventsActivity.class);
                 startActivity(setIntent);
                 finish();

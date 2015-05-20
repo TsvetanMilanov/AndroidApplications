@@ -10,7 +10,7 @@ import lab.chabingba.telerikacademyschedule.Event;
 public final class UpdateHelpers {
 
     public static void UpdateOutputFile(File outputFile, ArrayList<Event> listOfEvents) {
-        if (listOfEvents.size() >= 0) {
+        if (listOfEvents.size() > 0) {
             outputFile.delete();
 
             try {

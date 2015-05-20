@@ -11,8 +11,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import lab.chabingba.telerikacademyschedule.Helpers.Constants;
+import lab.chabingba.telerikacademyschedule.Helpers.EventHelpers;
 import lab.chabingba.telerikacademyschedule.Helpers.FileHelpers;
 
 /**
@@ -37,15 +39,17 @@ public class OptionsActivity extends Activity {
 
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        File outputFile = new File(Constants.FileDirectoryForBackup, "output.txt");
+
+                        File outputFileForOldEvents = new File(Constants.FileDirectoryForBackup, "OldEvents.txt");
+
                         switch (position) {
                             case 0:
                                 FileHelpers.DeleteAllFilesInDirectory(Constants.FileDirectoryForBackup);
 
-                                File outputFile = new File(Constants.FileDirectoryForBackup, "output.txt");
-
                                 FileHelpers.WriteEventsToFile(outputFile, Constants.FileDirectoryForBackup, Data.GetListOfEvents());
 
-                                File outputFileForOldEvents = new File(Constants.FileDirectoryForBackup, "OldEvents.txt");
                                 FileHelpers.WriteEventsToFile(outputFileForOldEvents, Constants.FileDirectoryForBackup, Data.GetListOfOldEvents());
 
                                 if (Data.GetListOfEvents().size() > 0 || Data.GetListOfOldEvents().size() > 0) {
@@ -75,7 +79,17 @@ public class OptionsActivity extends Activity {
                                 }
                                 break;
                             case 1:
+                                ArrayList<Event> tempListForEvents = new ArrayList<Event>();
+                                ArrayList<Event> tempListForOldEvents = new ArrayList<Event>();
 
+                                FileHelpers.ReadEventsFromFile(tempListForEvents, outputFile);
+                                FileHelpers.ReadEventsFromFile(tempListForOldEvents, outputFileForOldEvents);
+
+                                EventHelpers.AddDifferentEvents(Data.GetListOfEvents(), tempListForEvents);
+
+                                EventHelpers.AddDifferentEvents(Data.GetListOfOldEvents(), tempListForOldEvents);
+
+                                MakeLongToast("Done loading events");
                                 break;
                             default:
                                 MakeLongToast("Default case...");

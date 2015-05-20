@@ -136,4 +136,32 @@ public class Event implements Serializable, Comparable {
 
         return -1;
     }
+
+    public boolean Compare(Event secondEvent) {
+        if (!this.GetEventType().equals(secondEvent.GetEventType())) {
+            return false;
+        }
+
+        if (!this.GetEventDate().equals(secondEvent.GetEventDate())) {
+            return false;
+        }
+
+        if (!this.GetEventHour().equals(secondEvent.GetEventHour())) {
+            return false;
+        }
+
+        if (!this.GetEventDescription().equals(secondEvent.GetEventDescription())) {
+            return false;
+        }
+
+        if (this.GetIsFinished() != secondEvent.GetIsFinished()) {
+            return false;
+        }
+
+        if (this.GetHasNotification() != secondEvent.GetHasNotification()) {
+            return false;
+        }
+
+        return true;
+    }
 }
