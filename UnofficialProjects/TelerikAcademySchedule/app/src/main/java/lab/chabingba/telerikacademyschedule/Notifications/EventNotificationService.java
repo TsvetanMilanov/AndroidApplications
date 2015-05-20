@@ -34,7 +34,7 @@ public class EventNotificationService extends Service {
         this.event = NotificationHelpers.CheckForEventToday();
 
         if (this.event != null && event.GetHasNotification() == false) {
-            NotificationHelpers.CreateNotification(event);
+            NotificationHelpers.CreateNotification(this, event);
             Data.GetListOfEvents().get(event.GetEventID()).SetHasNotification(true);
         }
 

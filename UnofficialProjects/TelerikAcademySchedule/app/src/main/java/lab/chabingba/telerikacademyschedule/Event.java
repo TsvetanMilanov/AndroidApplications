@@ -7,7 +7,7 @@ public class Event implements Serializable, Comparable {
 
     private boolean isFinished;
     private int eventID;
-    private String eventName;
+    private String eventType;
     private Calendar eventDate;
     private String eventHour;
     private String eventDescription;
@@ -18,21 +18,21 @@ public class Event implements Serializable, Comparable {
         this.hasNotification = false;
     }
 
-    public Event(int eventID, String eventName, Calendar eventDate, String eventHour, String eventDescription) {
+    public Event(int eventID, String eventType, Calendar eventDate, String eventHour, String eventDescription) {
         this();
-        this.SetEventName(eventName);
+        this.SetEventType(eventType);
         this.SetEventDate(eventDate);
         this.SetEventHour(eventHour);
         this.SetEventDescription(eventDescription);
         this.SetEventID(eventID);
     }
 
-    public String GetEventName() {
-        return this.eventName;
+    public String GetEventType() {
+        return this.eventType;
     }
 
-    public void SetEventName(String value) {
-        this.eventName = value;
+    public void SetEventType(String value) {
+        this.eventType = value;
     }
 
     public String GetEventDate() {
@@ -82,7 +82,7 @@ public class Event implements Serializable, Comparable {
 
         result.append(this.GetEventID());
         result.append("\r\n");
-        result.append(this.GetEventName());
+        result.append(this.GetEventType());
         result.append("\r\n");
         result.append(this.GetEventDate());
         result.append("\r\n");

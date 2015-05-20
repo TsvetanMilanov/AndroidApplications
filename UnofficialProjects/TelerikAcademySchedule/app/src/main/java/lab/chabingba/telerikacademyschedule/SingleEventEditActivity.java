@@ -33,7 +33,7 @@ public class SingleEventEditActivity extends Activity {
 
         this.event = (Event) getIntent().getSerializableExtra("Event");
 
-        TextView textViewName = (TextView) findViewById(R.id.tvName);
+        TextView textViewName = (TextView) findViewById(R.id.tvType);
 
         final EditText etName = (EditText) findViewById(R.id.etName);
 
@@ -45,7 +45,7 @@ public class SingleEventEditActivity extends Activity {
 
         final String[] spinnerTypeItems = CreateOptionsForType(allEventTypes);
 
-        ArrayAdapter<String> adapterForEventType = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, spinnerTypeItems);
+        ArrayAdapter<String> adapterForEventType = new ArrayAdapter<>(this, R.layout.spinner_item, spinnerTypeItems);
 
         spinnerType.setAdapter(adapterForEventType);
 
@@ -92,7 +92,7 @@ public class SingleEventEditActivity extends Activity {
 
                 if (etName.getText().length() > 0 && etDate.getText().length() > 0 && etHour.getText().length() > 0 && etDescription.getText().length() > 0) {
                     editedEvent.SetEventID(event.GetEventID());
-                    editedEvent.SetEventName(etName.getText().toString());
+                    editedEvent.SetEventType(etName.getText().toString());
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
                     Calendar date = Calendar.getInstance();
                     try {
@@ -108,6 +108,8 @@ public class SingleEventEditActivity extends Activity {
                 } else {
                     throw new IllegalArgumentException("Field cannot be empty!");
                 }
+
+                editedEvent.SetHasNotification(event.GetHasNotification());
 
                 Intent intent = new Intent(SingleEventEditActivity.this, CurrentEventsActivity.class);
 
@@ -138,7 +140,7 @@ public class SingleEventEditActivity extends Activity {
 
     private String[] SetFirstEventType(String[] result) {
 
-        String currentEventType = this.event.GetEventName();
+        String currentEventType = this.event.GetEventType();
 
         for (int i = 0; i < result.length; i++) {
             String currentType = result[i];

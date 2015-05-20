@@ -13,7 +13,6 @@ import java.util.Calendar;
 
 import lab.chabingba.telerikacademyschedule.Data;
 import lab.chabingba.telerikacademyschedule.Event;
-import lab.chabingba.telerikacademyschedule.CurrentEventsActivity;
 import lab.chabingba.telerikacademyschedule.Notifications.AlarmReceiver;
 import lab.chabingba.telerikacademyschedule.Notifications.EventNotificationService;
 
@@ -84,7 +83,7 @@ public final class EventHelpers {
 
             String currentDay = EventHelpers.FindDayOfWeek(currentEvent.GetEventDateAsCalendarDate().get(Calendar.DAY_OF_WEEK));
 
-            eventsNamesAndDates[i] = currentEvent.GetEventName() + "\r\n" + currentEvent.GetEventDate() + "\r\n" + currentDay + "\r\n" + currentEvent.GetEventHour() + " h";
+            eventsNamesAndDates[i] = currentEvent.GetEventType() + "\r\n" + currentEvent.GetEventDate() + "\r\n" + currentDay + "\r\n" + currentEvent.GetEventHour() + " h";
         }
 
         return eventsNamesAndDates;
@@ -95,7 +94,7 @@ public final class EventHelpers {
 
         Intent intentForNotification = new Intent(context, EventNotificationService.class);
 
-        PendingIntent pendingIntent = PendingIntent.getService(context, 0, intentForNotification, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getService(context, 1, intentForNotification, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
@@ -159,8 +158,11 @@ public final class EventHelpers {
                     if (eventDate.get(Calendar.DAY_OF_MONTH) > currentDate.get(Calendar.DAY_OF_MONTH)) {
                         break;
                     } else if (eventDate.get(Calendar.DAY_OF_MONTH) == currentDate.get(Calendar.DAY_OF_MONTH)) {
-                        break;
+                        if (currentEvent.GetIsFinished() == true) {
+                            EventHelpers.MoveEventToOldEvents(listOfEvents, currentEvent);
+                        }
                     } else {
+
                         EventHelpers.MoveEventToOldEvents(listOfEvents, currentEvent);
                     }
                 } else {

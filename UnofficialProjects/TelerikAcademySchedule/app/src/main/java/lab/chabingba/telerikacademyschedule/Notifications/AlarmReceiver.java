@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import lab.chabingba.telerikacademyschedule.Data;
+import lab.chabingba.telerikacademyschedule.Helpers.Engine;
 import lab.chabingba.telerikacademyschedule.Helpers.EventHelpers;
 
 /**
@@ -14,6 +16,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i("RECEIVER", "RECEIVED");
+        Engine.UpdateEngineFiles(context, Data.GetOutputFile(), Data.GetListOfEvents(), Data.GetOutputFileForOldEvents(), Data.GetListOfOldEvents());
         EventHelpers.AlarmForPendingEvent(context);
     }
 }

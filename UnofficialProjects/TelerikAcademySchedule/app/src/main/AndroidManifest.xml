@@ -69,7 +69,6 @@
         <receiver android:name=".Notifications.AlarmReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="lab.chabingba.telerikacademyschedule.ALARMRECIEVER" />
             </intent-filter>
         </receiver>
     </application>

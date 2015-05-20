@@ -18,21 +18,21 @@ public class SingleEventViewActivity extends Activity {
 
         event = (Event) getIntent().getSerializableExtra("BundleEvent");
 
-        TextView textViewName = (TextView) findViewById(R.id.tvName);
+        TextView textViewType = (TextView) findViewById(R.id.tvType);
 
-        textViewName.append(event.GetEventName());
+        textViewType.setText(event.GetEventType());
 
         TextView textViewDate = (TextView) findViewById(R.id.tvDate);
 
-        textViewDate.append(event.GetEventDate());
+        textViewDate.setText(event.GetEventDate());
 
         TextView textViewHour = (TextView) findViewById(R.id.tvHour);
 
-        textViewHour.append(event.GetEventHour());
+        textViewHour.setText(event.GetEventHour());
 
         TextView textViewDescription = (TextView) findViewById(R.id.tvDescription);
 
-        textViewDescription.append("\r\n" + event.GetEventDescription());
+        textViewDescription.setText(event.GetEventDescription());
 
         Button editButton = (Button) findViewById(R.id.buttonEdit);
 

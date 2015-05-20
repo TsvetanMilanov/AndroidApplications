@@ -3,13 +3,13 @@
 <ScrollView
     android:id="@+id/scrollView"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#55FF28"
+    android:background="#ffffff"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:background="#55FF28"
+        android:background="#ffffff"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -30,7 +30,7 @@
                     android:layout_height="fill_parent">
 
                     <TextView
-                        android:id="@+id/tvName"
+                        android:id="@+id/tvType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Type: "
@@ -46,7 +46,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
-                        android:layout_marginLeft="100dp"
+                        android:layout_marginLeft="70dp"
                         android:layout_marginStart="100dp" />
                 </RelativeLayout>
             </TableRow>
@@ -59,6 +59,7 @@
                     android:layout_weight="1"
                     android:ellipsize="none"
                     android:maxLines="100"
+                    android:textColor="#868686"
                     android:scrollHorizontally="false" />
 
             </TableRow>
@@ -83,6 +84,7 @@
                     android:layout_weight="1"
                     android:ellipsize="none"
                     android:maxLines="100"
+                    android:textColor="#868686"
                     android:scrollHorizontally="false" />
 
             </TableRow>
@@ -108,6 +110,7 @@
                     android:layout_weight="1"
                     android:ellipsize="none"
                     android:maxLines="100"
+                    android:textColor="#868686"
                     android:scrollHorizontally="false" />
 
             </TableRow>
@@ -133,6 +136,7 @@
                     android:layout_weight="1"
                     android:ellipsize="none"
                     android:maxLines="100"
+                    android:textColor="#868686"
                     android:scrollHorizontally="false" />
 
             </TableRow>
@@ -161,11 +165,11 @@
         <Button
             android:id="@+id/buttonDone"
             android:text="Done"
-            android:background="#ff00de1b"
+            android:background="@drawable/button_gradient"
             android:layout_width="200dp"
             android:layout_height="50dp"
             android:textSize="23dp"
-            android:textColor="#ffffff"
+            android:textColor="#000000"
             android:layout_gravity="center"
             android:shadowDx="23"
             android:layout_marginBottom="20px" />

@@ -1,56 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
+    <!--
+        The theme could be changed to lighter one when changing the background to white
+        And the background of the buttons to button_gradient or button_gradient_with_glow
+        And the textColor of the buttons to black.
+    -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient">
+    android:background="#000000">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:background="@drawable/button_gradient_dark"
             android:text="Current Events"
             android:id="@+id/bCurrentEvents"
             android:textSize="23dp"
-            android:layout_marginTop="100dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
             android:saveEnabled="false"
-            android:onClick="StartCurrentEvents" />
+            android:onClick="StartCurrentEvents"
+            android:layout_below="@+id/ivHeaderLogo2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textColor="#ffffff"
+            android:layout_marginTop="30dp" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:background="@drawable/button_gradient_dark"
             android:text="Old Events"
             android:id="@+id/bOldEvents"
             android:textSize="23dp"
             android:layout_below="@+id/bCurrentEvents"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:onClick="StartOldEvents" />
+            android:layout_marginTop="1dp"
+            android:onClick="StartOldEvents"
+            android:textColor="#ffffff" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:background="@drawable/button_gradient_dark"
             android:text="Options"
             android:id="@+id/bOptions"
             android:layout_below="@+id/bOldEvents"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="1dp"
             android:textSize="23dp"
-            android:onClick="StartOptions" />
+            android:onClick="StartOptions"
+            android:textColor="#ffffff" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:background="@drawable/button_gradient_dark"
             android:text="Exit"
             android:id="@+id/bMainExit"
             android:layout_below="@+id/bOptions"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="1dp"
             android:textSize="23dp"
-            android:onClick="Exit" />
+            android:onClick="Exit"
+            android:textColor="#ffffff" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ivHeaderLogo2"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/header_logo_png" />
     </RelativeLayout>
 </LinearLayout>
