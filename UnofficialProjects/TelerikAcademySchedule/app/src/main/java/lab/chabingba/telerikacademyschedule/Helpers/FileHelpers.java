@@ -25,7 +25,7 @@ import lab.chabingba.telerikacademyschedule.Event;
 public final class FileHelpers {
 
     public static void WriteEventsToFile(File outputFile, File templateFileDir, ArrayList<Event> listOfEvents) {
-        if (listOfEvents.size() > 0)
+        if (listOfEvents.size() >= 0)
             try {
                 if (outputFile.exists()) {
                     WriteOutput(outputFile, listOfEvents);
@@ -236,7 +236,7 @@ public final class FileHelpers {
         int daysToAdd = 5;
         FileHelpers.AddDefaultEvents(listOfEvents, daysToAdd);
 
-        FileHelpers.WriteEventsToFile(outputFile, Constants.TemplateFileDir, listOfEvents);
+        FileHelpers.WriteEventsToFile(outputFile, Constants.FileDirectory, listOfEvents);
     }
 
     private static String MakeEventsString(ArrayList<Event> listOfEvents) {
@@ -253,4 +253,13 @@ public final class FileHelpers {
         return result.toString();
     }
 
+    public static void DeleteAllFilesInDirectory(File directory) {
+        File[] allFilesInDirectory = directory.listFiles();
+
+        if (directory.exists()) {
+            for (File tempFile : allFilesInDirectory) {
+                tempFile.delete();
+            }
+        }
+    }
 }

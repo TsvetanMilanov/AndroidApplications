@@ -145,6 +145,10 @@ public final class EventHelpers {
         Calendar eventDate;
 
         while (true) {
+            if (listOfEvents.size() <= 0) {
+                return;
+            }
+
             Event currentEvent = listOfEvents.get(0);
 
             eventDate = currentEvent.GetEventDateAsCalendarDate();
@@ -160,6 +164,8 @@ public final class EventHelpers {
                     } else if (eventDate.get(Calendar.DAY_OF_MONTH) == currentDate.get(Calendar.DAY_OF_MONTH)) {
                         if (currentEvent.GetIsFinished() == true) {
                             EventHelpers.MoveEventToOldEvents(listOfEvents, currentEvent);
+                        } else {
+                            break;
                         }
                     } else {
 

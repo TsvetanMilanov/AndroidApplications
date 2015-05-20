@@ -14,9 +14,9 @@ public final class Data {
 
     private static ArrayList<Event> listOfOldEvents = new ArrayList<>();
 
-    private static File outputFile = new File(Constants.TemplateFileDir, "output.txt");
+    private static File outputFile = new File(Constants.FileDirectory, "output.txt");
 
-    private static File outputFileForOldEvents = new File(Constants.TemplateFileDir, "OldEvents.txt");
+    private static File outputFileForOldEvents = new File(Constants.FileDirectory, "OldEvents.txt");
 
     public static ArrayList<Event> GetListOfEvents() {
         return Data.listOfEvents;

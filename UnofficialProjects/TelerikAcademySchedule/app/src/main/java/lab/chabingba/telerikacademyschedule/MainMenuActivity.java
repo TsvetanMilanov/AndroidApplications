@@ -5,12 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import java.io.File;
 import java.util.ArrayList;
 
-import lab.chabingba.telerikacademyschedule.Helpers.Constants;
 import lab.chabingba.telerikacademyschedule.Helpers.Engine;
 
 public class MainMenuActivity extends Activity {
@@ -39,10 +36,7 @@ public class MainMenuActivity extends Activity {
     }
 
     public void StartOptions(View v) {
-        CharSequence message = "Coming soon.";
-        Toast toast;
-        toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
-        toast.show();
+        startActivity(new Intent(this, OptionsActivity.class));
     }
 
     public void Exit(View v) {

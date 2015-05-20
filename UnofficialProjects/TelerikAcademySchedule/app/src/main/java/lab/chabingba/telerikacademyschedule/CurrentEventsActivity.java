@@ -105,6 +105,11 @@ public class CurrentEventsActivity extends ListActivity {
 
             case R.id.removeOldEvents:
                 EventHelpers.RemoveOldEvents(listOfEvents);
+
+                if (listOfEvents.size() > 0) {
+                    Data.SetListValuesOfEvents(listOfEvents);
+                }
+
                 Intent refreshMainIntent = new Intent(CurrentEventsActivity.this, CurrentEventsActivity.class);
 
                 startActivity(refreshMainIntent);

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,7 +28,7 @@ import lab.chabingba.telerikacademyschedule.Helpers.UpdateHelpers;
 public class OldEventsActivity extends ListActivity {
     private OldEventsActivity contextOfOldEventsActivity;
     private ArrayList<Event> listOfOldEvents = Data.GetListOfOldEvents();
-    private File outputFile = new File(Constants.TemplateFileDir, "OldEvents.txt");
+    private File outputFileForOldEvents = new File(Constants.FileDirectory, "OldEvents.txt");
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,16 +42,16 @@ public class OldEventsActivity extends ListActivity {
         /* Update the output.txt if an event was edited
         (on app start Data.listOfOldEvents is always empty, so only when adding event from edit to it it will have events in it.) */
 
-        UpdateHelpers.UpdateOutputFile(outputFile, listOfOldEvents);
+        UpdateHelpers.UpdateOutputFile(outputFileForOldEvents, listOfOldEvents);
 
         //Update the indexes in output file
-        UpdateHelpers.UpdateIndexes(outputFile, listOfOldEvents);
+        UpdateHelpers.UpdateIndexes(outputFileForOldEvents, listOfOldEvents);
 
-        FileHelpers.ReadEventsFromFile(listOfOldEvents, outputFile);
+        FileHelpers.ReadEventsFromFile(listOfOldEvents, outputFileForOldEvents);
 
         Collections.sort(listOfOldEvents);
 
-        UpdateHelpers.UpdateIndexes(outputFile, listOfOldEvents);
+        UpdateHelpers.UpdateIndexes(outputFileForOldEvents, listOfOldEvents);
 
         /* Create string array with all event names and dates as string for list items. */
 
@@ -97,12 +96,6 @@ public class OldEventsActivity extends ListActivity {
         switch (item.getItemId()) {
             case R.id.clearOldEvents:
                 Data.GetListOfOldEvents().clear();
-                boolean fileIsDeleted = outputFile.delete();
-
-                if (!fileIsDeleted) {
-                    Log.e("FILE", "The outputFile in OldEventsActivity is not deleted.");
-                }
-
 
                 Intent refreshOldEventsActivityIntent = new Intent(OldEventsActivity.this, OldEventsActivity.class);
 
@@ -141,6 +134,9 @@ public class OldEventsActivity extends ListActivity {
                         break;
                     }
                 }
+
+                Data.SetListValuesOfOldEvents(listOfOldEvents);
+                
                 Intent setIntent = new Intent(OldEventsActivity.this, OldEventsActivity.class);
                 startActivity(setIntent);
                 finish();

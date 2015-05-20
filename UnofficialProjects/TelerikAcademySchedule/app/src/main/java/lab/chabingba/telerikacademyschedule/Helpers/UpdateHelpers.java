@@ -10,16 +10,16 @@ import lab.chabingba.telerikacademyschedule.Event;
 public final class UpdateHelpers {
 
     public static void UpdateOutputFile(File outputFile, ArrayList<Event> listOfEvents) {
-        if (listOfEvents.size() > 0) {
+        if (listOfEvents.size() >= 0) {
             outputFile.delete();
 
             try {
-                FileHelpers.CreateOutputFile(outputFile, Constants.TemplateFileDir);
+                FileHelpers.CreateOutputFile(outputFile, Constants.FileDirectory);
             } catch (IllegalAccessException e) {
                 Log.e("FILE", e.getMessage());
             }
 
-            FileHelpers.WriteEventsToFile(outputFile, Constants.TemplateFileDir, listOfEvents);
+            FileHelpers.WriteEventsToFile(outputFile, Constants.FileDirectory, listOfEvents);
         }
     }
 
@@ -32,12 +32,12 @@ public final class UpdateHelpers {
             outputFile.delete();
 
             try {
-                FileHelpers.CreateOutputFile(outputFile, Constants.TemplateFileDir);
+                FileHelpers.CreateOutputFile(outputFile, Constants.FileDirectory);
             } catch (IllegalAccessException e) {
                 Log.e("FILE", e.getMessage());
             }
 
-            FileHelpers.WriteEventsToFile(outputFile, Constants.TemplateFileDir, listOfEvents);
+            FileHelpers.WriteEventsToFile(outputFile, Constants.FileDirectory, listOfEvents);
         }
     }
 }

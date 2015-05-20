@@ -85,7 +85,16 @@ public class SingleEventViewActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        Intent setIntent = new Intent(SingleEventViewActivity.this, CurrentEventsActivity.class);
+        Event event;
+        event = (Event) getIntent().getSerializableExtra("BundleEvent");
+
+        Intent setIntent;
+
+        if (event.GetIsFinished()) {
+            setIntent = new Intent(SingleEventViewActivity.this, OldEventsActivity.class);
+        } else {
+            setIntent = new Intent(SingleEventViewActivity.this, CurrentEventsActivity.class);
+        }
         startActivity(setIntent);
         finish();
     }
