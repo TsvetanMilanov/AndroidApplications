@@ -3,18 +3,17 @@ package lab.chabingba.telerikacademyschedule;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import lab.chabingba.telerikacademyschedule.Helpers.Constants;
@@ -63,15 +62,22 @@ public class SingleEventEditActivity extends Activity {
 
         TextView textViewDate = (TextView) findViewById(R.id.tvDate);
 
-        final EditText etDate = (EditText) findViewById(R.id.etDate);
+        final DatePicker datePicker = (DatePicker) findViewById(R.id.datePicker);
 
-        etDate.setText(event.GetEventDate());
+        int year = event.GetEventDateAsCalendarDate().get(Calendar.YEAR);
+        int month = event.GetEventDateAsCalendarDate().get(Calendar.MONTH);
+        int dayOfMonth = event.GetEventDateAsCalendarDate().get(Calendar.DAY_OF_MONTH);
+
+        datePicker.updateDate(year, month, dayOfMonth);
 
         TextView textViewHour = (TextView) findViewById(R.id.tvHour);
 
-        final EditText etHour = (EditText) findViewById(R.id.etHour);
+        final TimePicker timePicker = (TimePicker) findViewById(R.id.timePicker);
 
-        etHour.setText(event.GetEventHour());
+        timePicker.setIs24HourView(true);
+
+        timePicker.setCurrentHour(Integer.parseInt(event.GetEventHour().split(":")[0]));
+        timePicker.setCurrentMinute(Integer.parseInt(event.GetEventHour().split(":")[1]));
 
         TextView textViewDescription = (TextView) findViewById(R.id.tvDescription);
 
@@ -90,18 +96,26 @@ public class SingleEventEditActivity extends Activity {
             public void onClick(View v) {
                 Event editedEvent = new Event();
 
-                if (etName.getText().length() > 0 && etDate.getText().length() > 0 && etHour.getText().length() > 0 && etDescription.getText().length() > 0) {
+                if (etName.getText().length() > 0 && etDescription.getText().length() > 0) {
                     editedEvent.SetEventID(event.GetEventID());
                     editedEvent.SetEventType(etName.getText().toString());
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
                     Calendar date = Calendar.getInstance();
-                    try {
-                        date.setTime(dateFormat.parse(etDate.getText().toString()));
-                    } catch (ParseException e) {
-                        Log.e("DATE", e.getMessage());
+
+                    date.set(Calendar.YEAR, datePicker.getYear());
+                    date.set(Calendar.MONTH, datePicker.getMonth());
+                    date.set(Calendar.DAY_OF_MONTH, datePicker.getDayOfMonth());
+
+                    String hour = timePicker.getCurrentHour().toString();
+                    String minute = "";
+
+                    if (timePicker.getCurrentMinute().toString().length() == 1) {
+                        minute += "0" + timePicker.getCurrentMinute().toString();
+                    } else {
+                        minute += timePicker.getCurrentMinute().toString();
                     }
+
                     editedEvent.SetEventDate(date);
-                    editedEvent.SetEventHour(etHour.getText().toString());
+                    editedEvent.SetEventHour(hour + ":" + minute);
                     editedEvent.SetEventDescription(etDescription.getText().toString());
                     editedEvent.SetIsFinished(cbEditIsFinished.isChecked());
 
